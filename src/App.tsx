@@ -171,53 +171,32 @@ function App() {
   return (
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="flex justify-between items-center p-4 ">
-          <div className="flex">
-            <img src={web3authLogo} style={{ height: "4vh", marginRight: "0.5vw" }} />
-            <img src={starkexLogo} style={{ height: "4vh", marginLeft: "0.5vw" }} />
+        <header>
+          <div className="flex justify-between items-center p-4 ">
+            <div className="flex">
+              <img src={web3authLogo} style={{ height: "4vh", marginRight: "0.5vw" }} />
+              <img src={starkexLogo} style={{ height: "4vh", marginLeft: "0.5vw" }} />
+            </div>
+            <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
+              <img src="/web3AuthLogoWhite.svg" className="headerLogo" /> Connect to Web3Auth
+            </button>
           </div>
-          <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
-            <img src="/web3AuthLogoWhite.svg" className="headerLogo" /> Connect to Web3Auth
-          </button>
-
-          {/* <div className="flex items-end text-white w-1/5">
-            <a href="#" className="flex items-center text-white headerButton">
-              <div className="headerLogoContainer">
-                <img src="/web3AuthLogoWhite.svg" className="headerLogo" />
-              </div>
-              <span className="headerButtonText">Connect to Web3Auth</span>
-            </a>
-          </div> */}
+          <div className="flex justify-around w-full p-4 border-2 border-slate-200">
+            <button className="sidebarButton" onClick={() => {}}>
+              Deposit
+            </button>
+            <button className="sidebarButton" onClick={() => {}}>
+              Withdrawal
+            </button>
+            <button className="sidebarButton" onClick={() => {}}>
+              Minting
+            </button>
+            <button className="sidebarButton" onClick={() => {}}>
+              Transfer
+            </button>
+          </div>
         </header>
         <div className="flex h-full">
-          <nav className="flex w-72 h-full border-2 border-slate-200">
-            <div className="w-full flex mx-auto px-6 py-8">
-              <div className="w-full h-full flex text-gray-900 text-xl">
-                <ul>
-                  <li>
-                    <button className="sidebarButton" onClick={() => {}}>
-                      Deposit
-                    </button>
-                  </li>
-                  <li>
-                    <button className="sidebarButton" onClick={() => {}}>
-                      Withdrawal
-                    </button>
-                  </li>
-                  <li>
-                    <button className="sidebarButton" onClick={() => {}}>
-                      Minting
-                    </button>
-                  </li>
-                  <li>
-                    <button className="sidebarButton" onClick={() => {}}>
-                      Transfer
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
           <main className="flex flex-col w-full bg-slate-50 overflow-x-hidden overflow-y-auto ">
             <div className="flex w-full mx-auto px-6 py-8">
               <div className="flex flex-col w-full h-full text-gray-900 text-xl"></div>
