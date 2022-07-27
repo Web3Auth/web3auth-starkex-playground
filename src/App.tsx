@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
 
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
@@ -5,6 +6,8 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useEffect, useState } from "react";
 
+import starkexLogo from "./assets/starkexLogo.png";
+import web3authLogo from "./assets/web3authLogoBlue.svg";
 import RPC from "./starkexRPC";
 
 const clientId = "YOUR_CLIENT_ID"; // get from https://dashboard.web3auth.io
@@ -166,88 +169,37 @@ function App() {
   );
 
   return (
-    <div>
-      <nav className="flex header">
-        <div className="flex items-center text-white w-1/5">
-          <a className="headerLogoContainerBorder" href="https://web3auth.io">
-            <img src="/web3AuthLogoBlue.svg" className="headerLogo" />
-          </a>{" "}
-          <a className="headerLogoContainer" href="https://starkware.co/starkex/">
-            <img src="/starkexLogo.png" className="headerLogo" />
-          </a>
-        </div>
-        <div className="flex items-center w-3/5"></div>
-        <div className="flex items-end text-white w-1/5">
-          <a href="#" className="flex items-center text-white headerButton">
-            <div className="headerLogoContainer">
-              <img src="/web3AuthLogoWhite.svg" className="headerLogo" />
-            </div>
-            <span className="headerButtonText">Connect to Web3Auth</span>
-          </a>
-        </div>
-      </nav>
-      <div className="flex container">
-        <div className="flex-col w-1/5 items-center justify-center flex-none">
-          <ul>
-            <li>
-              <span className="sidebarHeading">Menu</span>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Default Parameters
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Deposit
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Withdrawal
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Settlement
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Minting
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Transfer
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Feeder Gateway
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                Availability Gateway
-              </button>
-            </li>
-            <li>
-              <button className="sidebarButton" onClick={() => {}}>
-                On-chain State
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div className="flex-none w-4/5 items-center justify-center flex-none">
-          <h1 className="title">
-            <a target="_blank" href="http://web3auth.io/" rel="noreferrer">
-              Web3Auth
-            </a>
-            & ReactJS Example
-          </h1>
+    <div className="flex h-screen">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="flex justify-between items-center p-4 ">
+          <div className="flex">
+            <img src={web3authLogo} style={{ height: "4vh", marginRight: "0.5vw" }} />
+            <img src={starkexLogo} style={{ height: "4vh", marginLeft: "0.5vw" }} />
+          </div>
+          <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
+            <img src="/web3AuthLogoWhite.svg" className="headerLogo" /> Connect to Web3Auth
+          </button>
 
-          <div className="grid">{provider ? loggedInView : unloggedInView}</div>
+          {/* <div className="flex items-end text-white w-1/5">
+            <a href="#" className="flex items-center text-white headerButton">
+              <div className="headerLogoContainer">
+                <img src="/web3AuthLogoWhite.svg" className="headerLogo" />
+              </div>
+              <span className="headerButtonText">Connect to Web3Auth</span>
+            </a>
+          </div> */}
+        </header>
+        <div className="flex h-full">
+          <nav className="flex w-72 h-full border-2 border-slate-200">
+            <div className="w-full flex mx-auto px-6 py-8">
+              <div className="w-full h-full flex items-center justify-center text-gray-900 text-xl">Sidebar</div>
+            </div>
+          </nav>
+          <main className="flex flex-col w-full bg-slate-50 overflow-x-hidden overflow-y-auto ">
+            <div className="flex w-full mx-auto px-6 py-8">
+              <div className="flex flex-col w-full h-full text-gray-900 text-xl"></div>
+            </div>
+          </main>
         </div>
       </div>
     </div>
