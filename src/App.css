@@ -74,6 +74,43 @@
   margin-left: 0.5rem;
 }
 
+.headerLogo {
+  height: 1.5rem;
+  width:auto;
+}
+
+.headerLogoContainerBorder {
+  border-right: 1px solid #C0C0C0;
+  padding: 0.5rem;
+}
+
+.headerLogoContainer {
+  padding: 0.5rem;
+}
+
+.header {
+  padding: 1rem;
+}
+
+.headerButton {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background: #0364FF;
+  box-shadow: 2px 2px 12px rgba(3, 100, 255, 0.05);
+  border-radius: 100px; 
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin:0;
+}
+
+.headerButtonText {
+  color: white;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
 @media (max-width: 1200px) {
   .container {
     width: 100%;
