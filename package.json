@@ -1,32 +1,27 @@
 {
-  "name": "react-starkex",
-  "version": "1.0.0",
+  "name": "web3auth-starkex-playground",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@starkware-industries/starkex-js": "0.0.6",
     "@starkware-industries/starkware-crypto-utils": "^0.0.2",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@toruslabs/eslint-config-typescript": "^1.0.3",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.38",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "@web3auth/base": "^1.1.1",
     "@web3auth/openlogin-adapter": "^1.1.1",
     "@web3auth/web3auth": "^1.1.1",
-    "bn.js": "^5.2.0",
-    "bootstrap": "^5.2.0",
     "elliptic": "^6.5.4",
     "react": "^18.1.0",
-    "react-bootstrap": "^2.4.0",
     "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1"
-  },
-  "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "lint": "eslint --fix 'src/**/*.ts' 'src/**/*.tsx'",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "react-scripts": "5.0.1",
+    "typescript": "^4.7.3",
+    "web-vitals": "^2.1.4"
   },
   "browserslist": {
     "production": [
@@ -41,21 +36,31 @@
     ]
   },
   "devDependencies": {
-    "@types/elliptic": "^6.4.14",
-    "@types/node": "^16.11.22",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "assert": "^2.0.0",
+    "autoprefixer": "^10.4.7",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "eslint": "^8.20.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
+    "postcss": "^8.4.14",
     "process": "^0.11.10",
     "react-app-rewired": "^2.2.1",
-    "react-scripts": "5.0.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "typescript": "^4.5.5",
+    "tailwindcss": "^3.1.6",
     "url": "^0.11.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
   }
 }

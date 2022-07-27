@@ -3,43 +3,45 @@ import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
 //@ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
-import { IWalletProvider } from "./walletProvider";
+//@ts-ignore
+import { ec as elliptic } from "elliptic";
 
-const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args: unknown[]) => void): IWalletProvider => {
+const starkExAPI = new StarkExAPI({
+  endpoint: "https://gw.playground-v2.starkex.co",
+});
 
-  const starkExAPI = new StarkExAPI({
-    endpoint: "https://gw.playground-v2.starkex.co",
-    });
+export default class StarkExRpc {
+  private provider: SafeEventEmitterProvider;
 
-  const getStarkAccount = async (): Promise<any> => {
+  constructor(provider: SafeEventEmitterProvider) {
+    this.provider = provider;
+  }
+
+  getStarkAccount = async (): Promise<any> => {
     try {
-      const privateKey = await provider.request({ method: "private_key" });
+      const privateKey = await this.provider.request({ method: "private_key" });
       const keyPair = starkwareCrypto.ec.keyFromPrivate(privateKey, "hex");
       const account = starkwareCrypto.ec.keyFromPublic(keyPair.getPublic(true, "hex"), "hex");
-      uiConsole(account);
       return account;
     } catch (error) {
-      uiConsole(error);
       return error;
     }
   };
 
-  const getStarkKey = async (): Promise<string | undefined> => {
+  getStarkKey = async (): Promise<string | undefined> => {
     try {
-      const account = await getStarkAccount();
+      const account = await this.getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
-      uiConsole(publicKeyX);
       return publicKeyX;
     } catch (error) {
-      uiConsole(error);
       return error as string;
     }
   };
 
-  const onMintRequest = async () => {
+  onMintRequest = async (): Promise<any> => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await getStarkKey();
+      const starkKey = await this.getStarkKey();
 
       const request = {
         txId,
@@ -49,16 +51,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args
         starkKey: `0x${starkKey}`,
       };
       const response = await starkExAPI.gateway.mint(request);
-      uiConsole(response);
+      return response;
     } catch (error) {
-      uiConsole(error);
+      return error as string;
     }
   };
 
-  const onDepositRequest = async () => {
+  onDepositRequest = async () => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await getStarkKey();
+      const starkKey = await this.getStarkKey();
       const request = {
         txId,
         amount: 8,
@@ -67,16 +69,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args
         vaultId: 1924014660,
       };
       const response = await starkExAPI.gateway.deposit(request);
-      uiConsole(response);
+      return response;
     } catch (error) {
-      uiConsole(error);
+      return error as string;
     }
   };
 
-  const onWithdrawalRequest = async () => {
+  onWithdrawalRequest = async (): Promise<any> => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await getStarkKey();
+      const starkKey = await this.getStarkKey();
       const request = {
         txId,
         amount: 8,
@@ -85,12 +87,9 @@ const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args
         vaultId: 612008755,
       };
       const response = await starkExAPI.gateway.withdrawal(request);
-      uiConsole(response);
+      return response;
     } catch (error) {
-      uiConsole(error);
+      return error as string;
     }
   };
-  return { getStarkAccount, getStarkKey, onMintRequest, onDepositRequest, onWithdrawalRequest };
-};
-
-export default starkexProvider;
+}
