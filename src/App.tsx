@@ -192,7 +192,30 @@ function App() {
         <div className="flex h-full">
           <nav className="flex w-72 h-full border-2 border-slate-200">
             <div className="w-full flex mx-auto px-6 py-8">
-              <div className="w-full h-full flex items-center justify-center text-gray-900 text-xl">Sidebar</div>
+              <div className="w-full h-full flex text-gray-900 text-xl">
+                <ul>
+                  <li>
+                    <button className="sidebarButton" onClick={() => {}}>
+                      Deposit
+                    </button>
+                  </li>
+                  <li>
+                    <button className="sidebarButton" onClick={() => {}}>
+                      Withdrawal
+                    </button>
+                  </li>
+                  <li>
+                    <button className="sidebarButton" onClick={() => {}}>
+                      Minting
+                    </button>
+                  </li>
+                  <li>
+                    <button className="sidebarButton" onClick={() => {}}>
+                      Transfer
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </nav>
           <main className="flex flex-col w-full bg-slate-50 overflow-x-hidden overflow-y-auto ">

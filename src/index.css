@@ -22,7 +22,15 @@ button:focus {
 }
 
 .sidebarHeading {
+  font-size: 1.2rem;
+  color: #808080;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.sidebarButton {
   font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  color: #808080;
+  font-weight: 400;
+  margin-bottom: 3rem;
 }
