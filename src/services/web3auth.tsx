@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
@@ -9,11 +10,12 @@ export interface IWeb3AuthContext {
   provider: IWalletProvider | null;
   isLoading: boolean;
   user: unknown;
+  starkKey: unknown;
   login: () => Promise<void>;
   logout: () => Promise<void>;
   getUserInfo: () => Promise<any>;
   getStarkAccount: () => Promise<any>;
-  getStarkKey: () => Promise<any>;
+  getStarkKey: (provider: any) => Promise<any>;
   onMintRequest: () => Promise<void>;
   onDepositRequest: () => Promise<void>;
   onWithdrawalRequest: () => Promise<void>;
@@ -26,6 +28,7 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   provider: null,
   isLoading: false,
   user: null,
+  starkKey: null,
   login: async () => {},
   logout: async () => {},
   getUserInfo: async () => {},
@@ -49,6 +52,7 @@ interface IWeb3AuthProps {
 export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null);
   const [provider, setProvider] = useState<IWalletProvider | null>(null);
+  const [starkKey, setStarkKey] = useState<IWalletProvider | null>(null);
   const [user, setUser] = useState<unknown | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,6 +75,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
         uiConsole("Yeah!, you are successfully logged in", data);
         setUser(data);
         setWalletProvider(web3auth.provider!);
+        getStarkKey(web3auth.provider);
       });
 
       web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
@@ -80,6 +85,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
       web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
         uiConsole("disconnected");
         setUser(null);
+        setStarkKey(null);
       });
 
       web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
@@ -153,13 +159,13 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.getStarkAccount();
   };
 
-  const getStarkKey = async () => {
+  const getStarkKey = async (provider: any) => {
     if (!provider) {
-      uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
+      uiConsole("provider not initialized yet 163");
       return;
     }
-    await provider.getStarkKey();
+    setStarkKey(await provider.getStarkKey());
+    console.log(starkKey);
   };
 
   const onMintRequest = async () => {
@@ -212,6 +218,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     provider,
     user,
     isLoading,
+    starkKey,
     login,
     logout,
     getUserInfo,

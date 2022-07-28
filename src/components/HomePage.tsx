@@ -1,12 +1,9 @@
-import { useState } from "react";
-
+import { useWeb3Auth } from "../services/web3auth";
 import Console from "./Console";
 import Header from "./Header";
 
 function HomePage() {
-  const [starkKey, setStarkKey] = useState("");
-  // const [tokenId, setTokenId] = useState("");
-  // const [amount, setAmount] = useState("");
+  const { starkKey } = useWeb3Auth();
 
   return (
     <>
@@ -31,8 +28,8 @@ function HomePage() {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
                 id="inline-full-name"
                 type="text"
-                value={starkKey}
-                onChange={(e) => setStarkKey(e.target.value)}
+                readOnly
+                value={starkKey as string}
               />
             </div>
           </div>
