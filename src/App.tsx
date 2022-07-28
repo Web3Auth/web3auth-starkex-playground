@@ -10,7 +10,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Deposit from "./components/Deposit";
-import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import Minting from "./components/Minting";
+import Transfer from "./components/Transfer";
 import Withdrawal from "./components/Withdrawal";
 import RPC from "./starkexRPC";
 
@@ -178,9 +180,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Header />} />
+            <Route index element={<HomePage />} />
             <Route path="deposit" element={<Deposit />} />
             <Route path="withdrawal" element={<Withdrawal />} />
+            <Route path="minting" element={<Minting />} />
+            <Route path="transfer" element={<Transfer />} />
           </Route>
         </Routes>
       </BrowserRouter>
