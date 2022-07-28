@@ -1,6 +1,6 @@
-/* eslint-disable import/extensions */
 import { useState } from "react";
 
+import Console from "./Console";
 import Header from "./Header";
 
 function Withdrawal() {
@@ -14,8 +14,6 @@ function Withdrawal() {
   const [expirationTimestamp, setExpirationTimestamp] = useState("");
   const [signatureR, setSignatureR] = useState("");
   const [signatureS, setSignatureS] = useState("");
-
-  const [response, setResponse] = useState("");
 
   return (
     <>
@@ -191,12 +189,7 @@ function Withdrawal() {
           Send with StarkEx Gateway
         </button>
 
-        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Response</h1>
-        <div className="justify-center w-full">
-          <div className="md:flex md:items-center mb-6">
-            <textarea rows={5} className="w-full bg-gray-200" value={response} onChange={(e) => setResponse(e.target.value)}></textarea>
-          </div>
-        </div>
+        <Console />
       </div>
     </>
   );

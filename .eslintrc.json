@@ -11,6 +11,9 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-shadow": "off",
     "@typescript-eslint/ban-ts-comment": 0,
+    "import/extensions": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-console": "off",
     "react/jsx-props-no-spreading": 0,
     "import/no-unresolved": [2, { "ignore": ["^@theme", "^@docusaurus", "^@site"] }]
   },

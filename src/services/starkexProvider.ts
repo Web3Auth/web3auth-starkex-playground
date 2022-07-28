@@ -4,42 +4,42 @@ import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
 
-const starkExAPI = new StarkExAPI({
-  endpoint: "https://gw.playground-v2.starkex.co",
-});
+import { IWalletProvider } from "./walletProvider";
 
-export default class StarkExRpc {
-  private provider: SafeEventEmitterProvider;
+const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args: unknown[]) => void): IWalletProvider => {
+  const starkExAPI = new StarkExAPI({
+    endpoint: "https://gw.playground-v2.starkex.co",
+  });
 
-  constructor(provider: SafeEventEmitterProvider) {
-    this.provider = provider;
-  }
-
-  getStarkAccount = async (): Promise<any> => {
+  const getStarkAccount = async (): Promise<any> => {
     try {
-      const privateKey = await this.provider.request({ method: "private_key" });
+      const privateKey = await provider.request({ method: "private_key" });
       const keyPair = starkwareCrypto.ec.keyFromPrivate(privateKey, "hex");
       const account = starkwareCrypto.ec.keyFromPublic(keyPair.getPublic(true, "hex"), "hex");
+      uiConsole(account);
       return account;
     } catch (error) {
+      uiConsole(error);
       return error;
     }
   };
 
-  getStarkKey = async (): Promise<string | undefined> => {
+  const getStarkKey = async (): Promise<string | undefined> => {
     try {
-      const account = await this.getStarkAccount();
+      const account = await getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
+      uiConsole(publicKeyX);
       return publicKeyX;
     } catch (error) {
+      uiConsole(error);
       return error as string;
     }
   };
 
-  onMintRequest = async (): Promise<any> => {
+  const onMintRequest = async () => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await this.getStarkKey();
+      const starkKey = await getStarkKey();
 
       const request = {
         txId,
@@ -49,51 +49,50 @@ export default class StarkExRpc {
         starkKey: `0x${starkKey}`,
       };
       const response = await starkExAPI.gateway.mint(request);
-      return response;
+      uiConsole(response);
     } catch (error) {
-      return error as string;
+      uiConsole(error);
     }
   };
 
-  onDepositRequest = async () => {
+  const onDepositRequest = async () => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await this.getStarkKey();
+      const starkKey = await getStarkKey();
       const request = {
         txId,
-        amount: 800000000,
+        amount: 8,
         starkKey: `0x${starkKey}`,
         tokenId: "0x3ef811e040c4bc9f9eee715441cee470f5d5aff69b9cd9aca7884f5a442a890",
         vaultId: 1924014660,
       };
       const response = await starkExAPI.gateway.deposit(request);
-      return response;
+      uiConsole(response);
     } catch (error) {
-      return error as string;
+      uiConsole(error);
     }
   };
 
-  onWithdrawalRequest = async (): Promise<any> => {
+  const onWithdrawalRequest = async () => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
-      const starkKey = await this.getStarkKey();
+      const starkKey = await getStarkKey();
       const request = {
         txId,
-        amount: 800000000000000000,
+        amount: 8,
         starkKey: `0x${starkKey}`,
         tokenId: "0x2dd48fd7a024204f7c1bd874da5e709d4713d60c8a70639eb1167b367a9c378",
         vaultId: 612008755,
       };
       const response = await starkExAPI.gateway.withdrawal(request);
-      return response;
+      uiConsole(response);
     } catch (error) {
-      return error as string;
+      uiConsole(error);
     }
   };
-
-  onTransferRequest = async (): Promise<any> => {
+  const onTransferRequest = async (): Promise<any> => {
     try {
-      const account = await this.getStarkAccount();
+      const account = await getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
       const publicKeyY = account.pub.getY().toString("hex");
       const request = {
@@ -141,9 +140,9 @@ export default class StarkExRpc {
     }
   };
 
-  onSettlementRequest = async (): Promise<any> => {
+  const onSettlementRequest = async (): Promise<any> => {
     try {
-      const account = await this.getStarkAccount();
+      const account = await getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
       const publicKeyY = account.pub.getY().toString("hex");
       const request = {
@@ -190,4 +189,7 @@ export default class StarkExRpc {
       return error as string;
     }
   };
-}
+  return { getStarkAccount, getStarkKey, onMintRequest, onDepositRequest, onWithdrawalRequest, onTransferRequest, onSettlementRequest };
+};
+
+export default starkexProvider;

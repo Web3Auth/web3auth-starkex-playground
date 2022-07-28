@@ -1,13 +1,10 @@
-/* eslint-disable import/extensions */
 import { useState } from "react";
 
+import Console from "./Console";
 import Header from "./Header";
 
 function Deposit() {
   const [starkKey, setStarkKey] = useState("");
-
-  const [response, setResponse] = useState("");
-
   // const [tokenId, setTokenId] = useState("");
   // const [amount, setAmount] = useState("");
 
@@ -75,13 +72,7 @@ function Deposit() {
         {/* <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
           Send with StarkEx Gateway
         </button> */}
-
-        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Response</h1>
-        <div className="justify-center w-full">
-          <div className="md:flex md:items-center mb-6">
-            <textarea rows={5} className="w-full bg-gray-200" value={response} onChange={(e) => setResponse(e.target.value)}></textarea>
-          </div>
-        </div>
+        <Console />
       </div>
     </>
   );
