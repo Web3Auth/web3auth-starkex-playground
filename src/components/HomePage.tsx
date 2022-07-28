@@ -16,9 +16,11 @@ function Deposit() {
       <br></br>
 
       <div className="h-56 grid grid-cols-3 gap-4 content-start">
-        <h1 className="flex justify-center items-center font-medium text-3xl mt-0 mb-2 text-slate-600">Welcome to Web3Auth StarkEx Playground</h1>
         <div className="justify-center w-full">
-          <div className="md:flex md:items-center block text-gray-500 font-bold md:text-right">Please connect to Web3Auth to get started</div>
+          <h1 className="flex items-center justify-center block font-medium text-3xl text-center mb-2 text-slate-600">
+            Welcome to Web3Auth StarkEx Playground
+          </h1>
+          <div className="flex items-center justify-center block text-slate-600 font-bold p-2">Please connect to Web3Auth to get started</div>
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
               <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
