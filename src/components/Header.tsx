@@ -1,7 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 import starkexLogo from "../assets/starkexLogo.png";
 import web3authLogo from "../assets/web3authLogoBlue.svg";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  function goToWithdrawal() {
+    navigate("/withdrawal");
+  }
+  function goToDeposit() {
+    navigate("/deposit");
+  }
+
   return (
     <div className="flex">
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -20,10 +31,10 @@ const Header = () => {
             </button>
           </div>
           <div className="flex flex-col sm:flex-row justify-around w-full p-4 border-2 border-slate-200">
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
+            <button className="sidebarButton p-4 sm:p-1" onClick={() => goToDeposit()}>
               Deposit
             </button>
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
+            <button className="sidebarButton p-4 sm:p-1" onClick={() => goToWithdrawal()}>
               Withdrawal
             </button>
             <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>

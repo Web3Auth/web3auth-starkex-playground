@@ -9,8 +9,6 @@ import { Web3Auth } from "@web3auth/web3auth";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import starkexLogo from "./assets/starkexLogo.png";
-import web3authLogo from "./assets/web3authLogoBlue.svg";
 import Deposit from "./components/Deposit";
 import Header from "./components/Header";
 import Withdrawal from "./components/Withdrawal";
@@ -46,6 +44,7 @@ function App() {
             uxMode: "popup",
           },
         });
+
         web3auth.configureAdapter(openloginAdapter);
         setWeb3auth(web3auth);
 
