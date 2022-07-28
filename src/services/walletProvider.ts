@@ -12,6 +12,6 @@ export interface IWalletProvider {
   onSettlementRequest: () => Promise<void>;
 }
 
-export const getWalletProvider = (provider: SafeEventEmitterProvider, uiConsole: any): IWalletProvider => {
+export const getWalletProvider = (provider: SafeEventEmitterProvider | null, uiConsole: any): IWalletProvider => {
   return starkexProvider(provider, uiConsole);
 };

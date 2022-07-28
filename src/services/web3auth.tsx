@@ -59,7 +59,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     }
   };
 
-  const setWalletProvider = useCallback((web3authProvider: SafeEventEmitterProvider) => {
+  const setWalletProvider = useCallback((web3authProvider: SafeEventEmitterProvider | null) => {
     const walletProvider = getWalletProvider(web3authProvider, uiConsole);
     setProvider(walletProvider);
   }, []);
@@ -121,7 +121,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     console.log("web3auth connecting");
     const localProvider = await web3Auth.connect();
     console.log("web3auth connected");
-    setWalletProvider(localProvider!);
+    setWalletProvider(localProvider);
   };
 
   const logout = async () => {

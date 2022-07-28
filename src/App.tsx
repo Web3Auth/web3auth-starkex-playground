@@ -7,10 +7,13 @@ import HomePage from "./components/HomePage";
 import Minting from "./components/Minting";
 import Transfer from "./components/Transfer";
 import Withdrawal from "./components/Withdrawal";
+import { Web3AuthProvider } from "./services/web3auth";
 
 function App() {
   return (
     <div>
+      <Web3AuthProvider />
+
       <BrowserRouter>
         <Routes>
           <Route path="/">

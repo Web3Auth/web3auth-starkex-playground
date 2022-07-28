@@ -6,14 +6,14 @@ import type { SafeEventEmitterProvider } from "@web3auth/base";
 
 import { IWalletProvider } from "./walletProvider";
 
-const starkexProvider = (provider: SafeEventEmitterProvider, uiConsole: (...args: unknown[]) => void): IWalletProvider => {
+const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (...args: unknown[]) => void): IWalletProvider => {
   const starkExAPI = new StarkExAPI({
     endpoint: "https://gw.playground-v2.starkex.co",
   });
 
   const getStarkAccount = async (): Promise<any> => {
     try {
-      const privateKey = await provider.request({ method: "private_key" });
+      const privateKey = await provider?.request({ method: "private_key" });
       const keyPair = starkwareCrypto.ec.keyFromPrivate(privateKey, "hex");
       const account = starkwareCrypto.ec.keyFromPublic(keyPair.getPublic(true, "hex"), "hex");
       uiConsole(account);
