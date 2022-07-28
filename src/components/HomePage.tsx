@@ -3,7 +3,7 @@ import { useState } from "react";
 import Console from "./Console";
 import Header from "./Header";
 
-function Deposit() {
+function HomePage() {
   const [starkKey, setStarkKey] = useState("");
   // const [tokenId, setTokenId] = useState("");
   // const [amount, setAmount] = useState("");
@@ -78,4 +78,4 @@ function Deposit() {
   );
 }
 
-export default Deposit;
+export default HomePage;
