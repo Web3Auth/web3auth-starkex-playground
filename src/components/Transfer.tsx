@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+import { useWeb3Auth } from "../services/web3auth";
 import Console from "./Console";
 import Header from "./Header";
 
 function Transfer() {
+  const { onTransferRequest } = useWeb3Auth();
   const [amount, setAmount] = useState("100");
   const [nonce, setNonce] = useState("1");
   const [senderPublicKey, setSenderPublicKey] = useState("");
@@ -185,7 +187,7 @@ function Transfer() {
             </div>
           </div>
         </div>
-        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
+        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={onTransferRequest}>
           Send with StarkEx Gateway
         </button>
 

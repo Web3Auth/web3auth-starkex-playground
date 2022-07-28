@@ -9,7 +9,7 @@ function Deposit() {
   const [tokenId, setTokenId] = useState("0x23a77118133287637ebdcd9e87a1613e443df789558867f5ba91faf7a024204");
   const [amount, setAmount] = useState("100");
 
-  const { starkKey } = useWeb3Auth();
+  const { starkKey, onDepositRequest } = useWeb3Auth();
   return (
     <>
       <Header />
@@ -83,7 +83,7 @@ function Deposit() {
             </div>
           </div>
         </div>
-        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
+        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={onDepositRequest}>
           Send with StarkEx Gateway
         </button>
         <Console />
