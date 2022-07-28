@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import "./index.css";
 
 import React from "react";

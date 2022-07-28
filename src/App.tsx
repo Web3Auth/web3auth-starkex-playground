@@ -1,13 +1,18 @@
+/* eslint-disable import/extensions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import "./App.css";
 
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { Web3Auth } from "@web3auth/web3auth";
 import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import starkexLogo from "./assets/starkexLogo.png";
 import web3authLogo from "./assets/web3authLogoBlue.svg";
+import Deposit from "./components/Deposit";
+import Header from "./components/Header";
 import RPC from "./starkexRPC";
 
 const clientId = "YOUR_CLIENT_ID"; // get from https://dashboard.web3auth.io
@@ -169,45 +174,15 @@ function App() {
   );
 
   return (
-    <div className="flex h-screen">
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <header>
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center p-4">
-            <div className="flex p-4 sm:p-1">
-              <a href="https://web3auth.io">
-                <img src={web3authLogo} style={{ height: "1.75rem", paddingRight: "0.5rem", borderRightWidth: "2px" }} />
-              </a>
-              <a href="https://starkware.co/starkex/">
-                <img src={starkexLogo} style={{ height: "1.75rem", paddingLeft: "0.5rem" }} />
-              </a>
-            </div>
-            <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
-              <img src="/web3AuthLogoWhite.svg" className="headerLogo" /> Connect to Web3Auth
-            </button>
-          </div>
-          <div className="flex flex-col sm:flex-row justify-around w-full p-4 border-2 border-slate-200">
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
-              Deposit
-            </button>
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
-              Withdrawal
-            </button>
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
-              Minting
-            </button>
-            <button className="sidebarButton p-4 sm:p-1" onClick={() => {}}>
-              Transfer
-            </button>
-          </div>
-        </header>
-        <div className="flex h-full">
-          <main className="flex flex-col w-full bg-slate-50 overflow-x-hidden overflow-y-auto ">
-            <div className="flex w-full mx-auto px-6 py-8">
-              <div className="flex flex-col w-full h-full text-gray-900 text-xl"></div>
-            </div>
-          </main>
-        </div>
-      </div>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<Header />} />
+            <Route path="deposits" element={<Deposit />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
