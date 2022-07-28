@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
@@ -63,9 +62,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     }
   };
 
-  const setWalletProvider = useCallback((web3authProvider: SafeEventEmitterProvider | null) => {
+  const setWalletProvider = useCallback(async (web3authProvider: SafeEventEmitterProvider | null) => {
     const walletProvider = getWalletProvider(web3authProvider, uiConsole);
+    console.log("68", provider);
     setProvider(walletProvider);
+    setStarkKey(await walletProvider?.getStarkKey());
   }, []);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
         uiConsole("Yeah!, you are successfully logged in", data);
         setUser(data);
         setWalletProvider(web3auth.provider!);
-        getStarkKey(web3auth.provider);
+        // getStarkKey();
       });
 
       web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
@@ -131,6 +132,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   };
 
   const logout = async () => {
+    uiConsole("Logging out");
     if (!web3Auth) {
       uiConsole("web3auth not initialized yet");
       uiConsole("web3auth not initialized yet");
@@ -138,6 +140,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     }
     await web3Auth.logout();
     setProvider(null);
+    setStarkKey(null);
   };
 
   const getUserInfo = async () => {
@@ -159,13 +162,12 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.getStarkAccount();
   };
 
-  const getStarkKey = async (provider: any) => {
+  const getStarkKey = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet 163");
       return;
     }
     setStarkKey(await provider.getStarkKey());
-    console.log(starkKey);
   };
 
   const onMintRequest = async () => {
