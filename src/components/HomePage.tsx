@@ -5,9 +5,11 @@ import Header from "./Header";
 
 function Deposit() {
   const [starkKey, setStarkKey] = useState("");
-  const [tokenId, setTokenId] = useState("");
-  const [amount, setAmount] = useState("");
+
   const [response, setResponse] = useState("");
+
+  // const [tokenId, setTokenId] = useState("");
+  // const [amount, setAmount] = useState("");
 
   return (
     <>
@@ -37,7 +39,7 @@ function Deposit() {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          {/* <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
               <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
                 token_id
@@ -68,11 +70,11 @@ function Deposit() {
                 onChange={(e) => setAmount(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
         </div>
-        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
+        {/* <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
           Send with StarkEx Gateway
-        </button>
+        </button> */}
 
         <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Response</h1>
         <div className="justify-center w-full">

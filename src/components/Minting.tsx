@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Header from "./Header";
 
-function Deposit() {
+function Minting() {
   const [vaultId, setVaultId] = useState("1654615998");
   const [starkKey, setStarkKey] = useState("");
   const [tokenId, setTokenId] = useState("");
@@ -17,7 +17,7 @@ function Deposit() {
       <br></br>
 
       <div className="h-56 grid grid-cols-3 gap-4 content-start">
-        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Deposit</h1>
+        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Minting</h1>
         <div className="justify-center w-full">
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
@@ -99,4 +99,4 @@ function Deposit() {
   );
 }
 
-export default Deposit;
+export default Minting;
