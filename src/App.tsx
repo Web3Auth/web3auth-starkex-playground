@@ -13,6 +13,7 @@ import starkexLogo from "./assets/starkexLogo.png";
 import web3authLogo from "./assets/web3authLogoBlue.svg";
 import Deposit from "./components/Deposit";
 import Header from "./components/Header";
+import Withdrawal from "./components/Withdrawal";
 import RPC from "./starkexRPC";
 
 const clientId = "YOUR_CLIENT_ID"; // get from https://dashboard.web3auth.io
@@ -179,7 +180,8 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Header />} />
-            <Route path="deposits" element={<Deposit />} />
+            <Route path="deposit" element={<Deposit />} />
+            <Route path="withdrawal" element={<Withdrawal />} />
           </Route>
         </Routes>
       </BrowserRouter>
