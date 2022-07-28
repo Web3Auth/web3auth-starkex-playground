@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState } from "react";
 
 import { useWeb3Auth } from "../services/web3auth";
@@ -83,7 +84,10 @@ function Deposit() {
             </div>
           </div>
         </div>
-        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={onDepositRequest}>
+        <button
+          className="flex rounded-full px-6 py-3 text-white"
+          style={{ backgroundColor: "#0364ff" }}
+          onClick={() => onDepositRequest(amount, tokenId, vaultId)}>
           Send with StarkEx Gateway
         </button>
         <Console />

@@ -5,9 +5,9 @@ import starkexProvider from "./starkexProvider";
 export interface IWalletProvider {
   getStarkAccount: () => Promise<any>;
   getStarkKey: () => Promise<any>;
-  onMintRequest: () => Promise<void>;
-  onDepositRequest: () => Promise<void>;
-  onWithdrawalRequest: () => Promise<void>;
+  onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
+  onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
+  onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onTransferRequest: () => Promise<void>;
   onSettlementRequest: () => Promise<void>;
 }

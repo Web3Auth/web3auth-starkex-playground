@@ -36,16 +36,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const onMintRequest = async () => {
+  const onMintRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
       const starkKey = await getStarkKey();
 
       const request = {
         txId,
-        vaultId: 1654615998,
-        amount: "6",
-        tokenId: "0x400de4b5a92118719c78df48f4ff31e78de58575487ce1eaf19922ad9b8a714",
+        vaultId,
+        amount,
+        tokenId,
         starkKey: `0x${starkKey}`,
       };
       const response = await starkExAPI.gateway.mint(request);
@@ -55,16 +55,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const onDepositRequest = async () => {
+  const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
       const starkKey = await getStarkKey();
       const request = {
         txId,
-        amount: 8,
+        amount,
         starkKey: `0x${starkKey}`,
-        tokenId: "0x3ef811e040c4bc9f9eee715441cee470f5d5aff69b9cd9aca7884f5a442a890",
-        vaultId: 1924014660,
+        tokenId,
+        vaultId,
       };
       const response = await starkExAPI.gateway.deposit(request);
       uiConsole(response);
@@ -73,16 +73,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const onWithdrawalRequest = async () => {
+  const onWithdrawalRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
       const starkKey = await getStarkKey();
       const request = {
         txId,
-        amount: 8,
+        amount,
         starkKey: `0x${starkKey}`,
-        tokenId: "0x2dd48fd7a024204f7c1bd874da5e709d4713d60c8a70639eb1167b367a9c378",
-        vaultId: 612008755,
+        tokenId,
+        vaultId,
       };
       const response = await starkExAPI.gateway.withdrawal(request);
       uiConsole(response);

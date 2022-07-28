@@ -15,9 +15,9 @@ export interface IWeb3AuthContext {
   getUserInfo: () => Promise<any>;
   getStarkAccount: () => Promise<any>;
   getStarkKey: (provider: any) => Promise<any>;
-  onMintRequest: () => Promise<void>;
-  onDepositRequest: () => Promise<void>;
-  onWithdrawalRequest: () => Promise<void>;
+  onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
+  onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
+  onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onTransferRequest: () => Promise<void>;
   onSettlementRequest: () => Promise<void>;
 }
@@ -170,31 +170,31 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     setStarkKey(await provider.getStarkKey());
   };
 
-  const onMintRequest = async () => {
+  const onMintRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onMintRequest();
+    await provider.onMintRequest(amount, tokenId, vaultId);
   };
 
-  const onDepositRequest = async () => {
+  const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onDepositRequest();
+    await provider.onDepositRequest(amount, tokenId, vaultId);
   };
 
-  const onWithdrawalRequest = async () => {
+  const onWithdrawalRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onWithdrawalRequest();
+    await provider.onWithdrawalRequest(amount, tokenId, vaultId);
   };
 
   const onTransferRequest = async () => {
