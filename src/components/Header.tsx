@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import starkexLogo from "../assets/starkexLogo.png";
 import web3authLogo from "../assets/web3authLogoBlue.svg";
+import web3AuthLogoWhite from "../assets/web3authLogoWhite.svg";
 import { useWeb3Auth } from "../services/web3auth";
 
 const Header = () => {
@@ -36,12 +37,12 @@ const Header = () => {
             </div>
             {!provider ? (
               <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={login}>
-                <img src="/web3AuthLogoWhite.svg" className="headerLogo" />
+                <img src={web3AuthLogoWhite} className="headerLogo" />
                 Connect to Web3Auth
               </button>
             ) : (
               <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={logout}>
-                <img src="/web3AuthLogoWhite.svg" className="headerLogo" />
+                <img src={web3AuthLogoWhite} className="headerLogo" />
                 Disconnect from Web3Auth
               </button>
             )}

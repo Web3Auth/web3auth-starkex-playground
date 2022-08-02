@@ -5,17 +5,18 @@ import Console from "./Console";
 import Header from "./Header";
 
 function Transfer() {
-  const { onTransferRequest } = useWeb3Auth();
-  const [amount, setAmount] = useState("100");
-  const [nonce, setNonce] = useState("1");
-  const [senderPublicKey, setSenderPublicKey] = useState("");
-  const [senderVaultId, setSenderVaultId] = useState("");
+  const { starkKey, onTransferRequest } = useWeb3Auth();
+  const [amount, setAmount] = useState("10");
+  const [nonce, setNonce] = useState(`${Math.floor(Math.random() * 100)}`);
+  const [senderPublicKey, setSenderPublicKey] = useState(`${starkKey}`);
+  const [senderVaultId, setSenderVaultId] = useState("1654615998");
   const [token, setToken] = useState("0x23a77118133287637ebdcd9e87a1613e443df789558867f5ba91faf7a024204");
   const [ethAddress, setEthAddress] = useState("0x987bade59c976DC2E341AB46fad1232dfba3444f");
-  const [TransferVaultId, setTransferVaultId] = useState("");
-  const [expirationTimestamp, setExpirationTimestamp] = useState("");
-  const [signatureR, setSignatureR] = useState("");
-  const [signatureS, setSignatureS] = useState("");
+  const [receiverPublicKey, setReceiverPublicKey] = useState("0x011869c13b32ab9b7ec84e2b31c1de58baaaa6bbb2443a33bbad8df739a6e958");
+  const [receiverVaultId, setReceiverVaultId] = useState("1654615999");
+  const [expirationTimestamp, setExpirationTimestamp] = useState("2147483647");
+  const [signatureR, setSignatureR] = useState("5d14357fcf8f489218de0855267c6f64bc463135debf62680ad796e63cd6d3b");
+  const [signatureS, setSignatureS] = useState("786ab874d91e3a5871134955fcb768914754760a0ada326af67f758f32819cf");
 
   return (
     <>
@@ -109,6 +110,54 @@ function Transfer() {
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
               <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                receiver_public_key
+              </label>
+            </div>
+            <div className="md:w-1/3">
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                id="inline-full-name"
+                type="text"
+                value={receiverPublicKey}
+                onChange={(e) => setReceiverPublicKey(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                receiver_public_key
+              </label>
+            </div>
+            <div className="md:w-1/3">
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                id="inline-full-name"
+                type="text"
+                value={receiverPublicKey}
+                onChange={(e) => setReceiverPublicKey(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                receiver_vault_id
+              </label>
+            </div>
+            <div className="md:w-1/3">
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                id="inline-full-name"
+                type="text"
+                value={receiverVaultId}
+                onChange={(e) => setReceiverVaultId(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
                 eth_address
               </label>
             </div>
@@ -119,22 +168,6 @@ function Transfer() {
                 type="text"
                 value={ethAddress}
                 onChange={(e) => setEthAddress(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                Transfer vault id
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={TransferVaultId}
-                onChange={(e) => setTransferVaultId(e.target.value)}
               />
             </div>
           </div>
@@ -187,7 +220,25 @@ function Transfer() {
             </div>
           </div>
         </div>
-        <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }} onClick={onTransferRequest}>
+        <button
+          className="flex rounded-full px-6 py-3 text-white"
+          style={{ backgroundColor: "#0364ff" }}
+          onClick={
+            () =>
+              onTransferRequest(
+                amount,
+                nonce,
+                senderPublicKey,
+                senderVaultId,
+                token,
+                receiverPublicKey,
+                receiverPublicKey,
+                expirationTimestamp,
+                signatureR,
+                signatureS
+              )
+            // eslint-disable-next-line prettier/prettier
+          }>
           Send with StarkEx Gateway
         </button>
 

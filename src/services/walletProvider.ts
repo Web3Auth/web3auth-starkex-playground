@@ -8,7 +8,18 @@ export interface IWalletProvider {
   onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
-  onTransferRequest: () => Promise<void>;
+  onTransferRequest: (
+    amount: string,
+    nonce: string,
+    sender_public_key: string,
+    sender_vault_id: string,
+    token: string,
+    receiver_public_key: string,
+    receiver_vault_id: string,
+    expirationTimestamp: string,
+    signaturer: string,
+    signatures: string
+  ) => Promise<void>;
   onSettlementRequest: () => Promise<void>;
 }
 

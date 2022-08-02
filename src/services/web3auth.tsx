@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
@@ -18,7 +19,18 @@ export interface IWeb3AuthContext {
   onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
-  onTransferRequest: () => Promise<void>;
+  onTransferRequest: (
+    amount: string,
+    nonce: string,
+    sender_public_key: string,
+    sender_vault_id: string,
+    token: string,
+    receiver_public_key: string,
+    receiver_vault_id: string,
+    expirationTimestamp: string,
+    signaturer: string,
+    signatures: string
+  ) => Promise<void>;
   onSettlementRequest: () => Promise<void>;
 }
 
@@ -97,7 +109,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     async function init() {
       try {
         setIsLoading(true);
-        const clientId = "BKPxkCtfC9gZ5dj-eg-W6yb5Xfr3XkxHuGZl2o2Bn8gKQ7UYike9Dh6c-_LaXlUN77x0cBoPwcSx-IVm0llVsLA";
+        const clientId = "BOBJnF2hVRa4lNWVDSZuFBs3mKeA8_P2gRHvIqsgyGAjg8tnVgTmJOVFF_AtvZNYNVD0OydlF01286JouQs8DIA";
         const web3AuthInstance = new Web3Auth({
           chainConfig: {
             displayName: "StarkEx",
@@ -197,13 +209,35 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onWithdrawalRequest(amount, tokenId, vaultId);
   };
 
-  const onTransferRequest = async () => {
+  const onTransferRequest = async (
+    amount: string,
+    nonce: string,
+    sender_public_key: string,
+    sender_vault_id: string,
+    token: string,
+    receiver_public_key: string,
+    receiver_vault_id: string,
+    expirationTimestamp: string,
+    signaturer: string,
+    signatures: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onTransferRequest();
+    await provider.onTransferRequest(
+      amount,
+      nonce,
+      sender_public_key,
+      sender_vault_id,
+      token,
+      receiver_public_key,
+      receiver_vault_id,
+      expirationTimestamp,
+      signaturer,
+      signatures
+    );
   };
 
   const onSettlementRequest = async () => {
