@@ -115,19 +115,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
 
   const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
-      const privateKey = await provider?.request({ method: "private_key" });
-      const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
-      const signer = new Wallet(privateKey as string, alchemyProvider);
-      const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
       const starkKey = await getStarkKey();
-      const assetType = "487900843333545008064572300275633979128213487563868880630965558956905840030";
-      const txn = await StarkExchange.depositEth(BigInt(`0x${starkKey}` as string).toString(10), assetType, vaultId, {
-        gasPrice: 10000000000,
-        gasLimit: 9000000,
-        value: 1000000000000,
-      });
-
-      console.log(await txn.wait());
 
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
 
