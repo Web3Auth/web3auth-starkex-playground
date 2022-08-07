@@ -21,6 +21,9 @@ export interface IWeb3AuthContext {
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onL1DepositRequest: (amount: string, assetType: string, vaultId: string) => Promise<void>;
   onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
+  onL1WithdrawalRequest: (amount: string, vaultId: string, assetType: string) => Promise<void>;
+  onViewBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
+  onViewDepositBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
   onTransferRequest: (
     amount: string,
     nonce: string,
@@ -52,6 +55,9 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   onDepositRequest: async () => {},
   onL1DepositRequest: async () => {},
   onWithdrawalRequest: async () => {},
+  onL1WithdrawalRequest: async () => {},
+  onViewBalanceRequest: async () => {},
+  onViewDepositBalanceRequest: async () => {},
   onTransferRequest: async () => {},
   onSettlementRequest: async () => {},
 });
@@ -232,6 +238,33 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onWithdrawalRequest(amount, tokenId, vaultId);
   };
 
+  const onL1WithdrawalRequest = async (amount: string, vaultId: string, assetType: string) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.onL1WithdrawalRequest(amount, vaultId, assetType);
+  };
+
+  const onViewBalanceRequest = async (assetType: string, vaultId: string) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.onViewBalanceRequest(assetType, vaultId);
+  };
+
+  const onViewDepositBalanceRequest = async (assetId: string, vaultId: string) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.onViewDepositBalanceRequest(assetId, vaultId);
+  };
+
   const onTransferRequest = async (
     amount: string,
     nonce: string,
@@ -289,6 +322,9 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     onDepositRequest,
     onL1DepositRequest,
     onWithdrawalRequest,
+    onL1WithdrawalRequest,
+    onViewBalanceRequest,
+    onViewDepositBalanceRequest,
     onTransferRequest,
     onSettlementRequest,
   };

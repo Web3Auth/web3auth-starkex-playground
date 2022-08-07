@@ -1,4 +1,7 @@
+/* eslint-disable camelcase */
 /* eslint-disable prettier/prettier */
+// @ts-ignore
+import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { useState } from "react";
 
 import { useWeb3Auth } from "../services/web3auth";
@@ -6,12 +9,14 @@ import Console from "./Console";
 import Header from "./Header";
 
 function Deposit() {
+  const asset_type = starkwareCrypto.asset.getAssetType({ type: "ETH", data: { quantum: "1" } });
+  const asset_id = starkwareCrypto.asset.getAssetId({ type: "ETH", data: { quantum: "1" } });
   const [vaultId, setVaultId] = useState("1654615998");
-  const [tokenId, setTokenId] = useState("0x23a77118133287637ebdcd9e87a1613e443df789558867f5ba91faf7a024204");
-  const [assetType, setAssetType] = useState("487900843333545008064572300275633979128213487563868880630965558956905840030");
-  const [amount, setAmount] = useState("100");
+  const [tokenId, setTokenId] = useState(asset_id);
+  const [assetType, setAssetType] = useState(asset_type);
+  const [amount, setAmount] = useState("6000000000");
 
-  const { starkKey, onDepositRequest, onL1DepositRequest } = useWeb3Auth();
+  const { starkKey, onDepositRequest, onL1DepositRequest, onViewBalanceRequest, onViewDepositBalanceRequest } = useWeb3Auth();
   return (
     <>
       <Header />
@@ -20,7 +25,7 @@ function Deposit() {
 
       <div className="h-56 grid grid-cols-3 gap-4 content-start">
         <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">
-          Deposit L1 to Starkex
+          Deposit (L1 → Starkex)
         </h1>
         <div className="justify-center w-full">
           <div className="md:flex md:items-center mb-6">
@@ -93,6 +98,12 @@ function Deposit() {
           style={{ backgroundColor: "#0364ff" }}
           onClick={() => onL1DepositRequest(amount, assetType, vaultId)}>
           Deposit ETH
+        </button>
+        <button
+          className="flex rounded-full px-6 py-3 text-white"
+          style={{ backgroundColor: "#0364ff" }}
+          onClick={() => onViewBalanceRequest(assetType, vaultId)}>
+          View Balance
         </button>
         <br></br>
         <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Deposit</h1>
@@ -167,6 +178,12 @@ function Deposit() {
           style={{ backgroundColor: "#0364ff" }}
           onClick={() => onDepositRequest(amount, tokenId, vaultId)}>
           Send with StarkEx Gateway
+        </button>
+        <button
+          className="flex rounded-full px-6 py-3 text-white"
+          style={{ backgroundColor: "#0364ff" }}
+          onClick={() => onViewDepositBalanceRequest(assetType, vaultId)}>
+          View Deposit Balance
         </button>
         <Console />
       </div>

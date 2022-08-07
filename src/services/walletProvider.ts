@@ -10,6 +10,9 @@ export interface IWalletProvider {
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onL1DepositRequest: (amount: string, assetType: string, vaultId: string) => Promise<void>;
+  onL1WithdrawalRequest: (amount: string, vaultId: string, assetType: string) => Promise<void>;
+  onViewBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
+  onViewDepositBalanceRequest: (assetId: string, vaultId: string) => Promise<void>;
   onTransferRequest: (
     amount: string,
     nonce: string,
