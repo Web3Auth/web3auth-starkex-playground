@@ -4,13 +4,27 @@ import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
+import { privateToAddress } from "ethereumjs-util";
+import { Contract, providers, Wallet } from "ethers";
 
+import ABI from "../config/ABI.json";
 import { IWalletProvider } from "./walletProvider";
 
 const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (...args: unknown[]) => void): IWalletProvider => {
   const starkExAPI = new StarkExAPI({
     endpoint: "https://gw.playground-v2.starkex.co",
   });
+
+  const getETHAddress = async (): Promise<any> => {
+    try {
+      const privateKey = await provider?.request({ method: "private_key" });
+      const address = privateToAddress(Buffer.from(privateKey as string, "hex")).toString("hex");
+      return address;
+    } catch (error) {
+      uiConsole(error);
+      return error;
+    }
+  };
 
   const getStarkAccount = async (): Promise<any> => {
     try {
@@ -24,6 +38,28 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       return error;
     }
   };
+
+  // const getSignature = async (transfer: any): Promise<any> => {
+  //   try {
+  //     const privateKey = await provider?.request({ method: "private_key" });
+  //     const keyPair = starkwareCrypto.ec.keyFromPrivate(privateKey, "hex");
+  //     const msgHash = starkwareCrypto.getTransferMsgHash(
+  //       transfer.amount, // - amount (uint63 decimal str)
+  //       transfer.nonce, // - nonce (uint31)
+  //       transfer.sender_vault_id, // - sender_vault_id (uint31)
+  //       transfer.token, // - token (hex str with 0x prefix < prime)
+  //       transfer.target_vault_id, // - target_vault_id (uint31)
+  //       transfer.target_public_key, // - target_public_key (hex str with 0x prefix < prime)
+  //       transfer.expiration_timestamp // - expiration_timestamp (uint22)
+  //     );
+  //     const msgSignature = starkwareCrypto.sign(keyPair, msgHash);
+  //     const { r, s } = msgSignature;
+  //     return { r, s };
+  //   } catch (error) {
+  //     uiConsole(error);
+  //     return error;
+  //   }
+  // };
 
   const getStarkKey = async (): Promise<string | undefined> => {
     try {
@@ -56,10 +92,42 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
+  const onViewBalanceRequest = async (assetType: string, vaultId: string) => {
+    const privateKey = await provider?.request({ method: "private_key" });
+    const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
+    const signer = new Wallet(privateKey as string, alchemyProvider);
+    const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
+    const starkKey = await getStarkKey();
+    uiConsole(await StarkExchange.getDepositBalance(BigInt(`0x${starkKey}` as string).toString(10), assetType, vaultId));
+  };
+
+  const onL1DepositRequest = async (amount: string, assetType: string, vaultId: string) => {
+    uiConsole("Depositing from L1");
+    try {
+      const privateKey = await provider?.request({ method: "private_key" });
+      const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
+      const signer = new Wallet(privateKey as string, alchemyProvider);
+      const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
+      const starkKey = await getStarkKey();
+      const txn = await StarkExchange.depositEth(BigInt(`0x${starkKey}` as string).toString(10), assetType, vaultId, {
+        gasPrice: 10000000000,
+        gasLimit: 9000000,
+        value: amount,
+      });
+      uiConsole(txn);
+      uiConsole(await txn.wait());
+    } catch (error) {
+      console.log(error);
+      uiConsole(error);
+    }
+  };
+
   const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
-      const txId = await starkExAPI.gateway.getFirstUnusedTxId();
       const starkKey = await getStarkKey();
+
+      const txId = await starkExAPI.gateway.getFirstUnusedTxId();
+
       const request = {
         txId,
         amount,
@@ -69,7 +137,43 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       };
       const response = await starkExAPI.gateway.deposit(request);
       uiConsole(response);
+      uiConsole(await starkExAPI.gateway.getTransaction(response.txId));
     } catch (error) {
+      console.log(error);
+      uiConsole(error);
+    }
+  };
+
+  const onViewDepositBalanceRequest = async (assetId: string, vaultId: string) => {
+    try {
+      const starkKey = await getStarkKey();
+      const privateKey = await provider?.request({ method: "private_key" });
+      const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
+      const signer = new Wallet(privateKey as string, alchemyProvider);
+      const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
+      const balance = await StarkExchange.getQuantizedDepositBalance(BigInt(`0x${starkKey}` as string).toString(10), assetId, vaultId);
+      uiConsole(balance);
+    } catch (error) {
+      console.log(error);
+      uiConsole(error);
+    }
+  };
+
+  const onL1WithdrawalRequest = async (amount: string, vaultId: string, assetType: string) => {
+    uiConsole("Withdrawing to L1");
+    try {
+      const privateKey = await provider?.request({ method: "private_key" });
+      const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
+      const signer = new Wallet(privateKey as string, alchemyProvider);
+      const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
+      const txn = await StarkExchange.withdrawFromVault(assetType, vaultId, amount, {
+        gasPrice: 10000000000,
+        gasLimit: 9000000,
+      });
+      uiConsole(txn);
+      uiConsole(await txn.wait());
+    } catch (error) {
+      console.log(error);
       uiConsole(error);
     }
   };
@@ -201,7 +305,20 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       return error as string;
     }
   };
-  return { getStarkAccount, getStarkKey, onMintRequest, onDepositRequest, onWithdrawalRequest, onTransferRequest, onSettlementRequest };
+  return {
+    getETHAddress,
+    getStarkAccount,
+    getStarkKey,
+    onViewBalanceRequest,
+    onMintRequest,
+    onDepositRequest,
+    onL1DepositRequest,
+    onViewDepositBalanceRequest,
+    onWithdrawalRequest,
+    onL1WithdrawalRequest,
+    onTransferRequest,
+    onSettlementRequest,
+  };
 };
 
 export default starkexProvider;
