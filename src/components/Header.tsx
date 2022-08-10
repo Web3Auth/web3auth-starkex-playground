@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { useNavigate } from "react-router-dom";
 
 import starkexLogo from "../assets/starkexLogo.png";

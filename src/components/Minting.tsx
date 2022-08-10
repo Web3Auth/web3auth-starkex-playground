@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable prettier/prettier */
 import { useState } from "react";
 

@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable camelcase */
 /* eslint-disable prettier/prettier */
 // @ts-ignore
