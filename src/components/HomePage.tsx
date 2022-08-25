@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { useWeb3Auth } from "../services/web3auth";
 import Console from "./Console";
 import Header from "./Header";

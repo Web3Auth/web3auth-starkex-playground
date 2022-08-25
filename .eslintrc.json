@@ -13,6 +13,7 @@
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-console": "off",
+    "import/extensions": "off",
     "react/jsx-props-no-spreading": 0,
     "import/no-unresolved": [2, { "ignore": ["^@theme", "^@docusaurus", "^@site"] }]
   },
