@@ -8,7 +8,7 @@ interface FormProps {
 
 function Form({ heading, formDetails, children }: FormProps) {
   return (
-    <div className="w-11/12 px-4 sm:px-6 lg:px-8 ">
+    <div className="w-11/12 px-4 sm:px-6 lg:px-8  z-0">
       <p className="text-lg font-bold">{heading}</p>
       <form action="" className="p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
         {formDetails.map((formDetail) => (
@@ -19,7 +19,7 @@ function Form({ heading, formDetails, children }: FormProps) {
                 <input
                   type="email"
                   id="email"
-                  className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
+                  className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm  z-0"
                   value={formDetail.input}
                   onChange={(e) => {
                     formDetail.onChange(e.target.value as string);
@@ -29,7 +29,7 @@ function Form({ heading, formDetails, children }: FormProps) {
                 <input
                   type="email"
                   id="email"
-                  className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
+                  className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm  z-0"
                   value={formDetail.input}
                   {...(formDetail.readOnly ? { readOnly: true } : {})}
                 />

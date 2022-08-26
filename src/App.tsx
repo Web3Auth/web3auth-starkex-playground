@@ -2,11 +2,11 @@ import "./App.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Deposit from "./components/Deposit";
-import HomePage from "./components/HomePage";
-import Minting from "./components/Minting";
-import Transfer from "./components/Transfer";
-import Withdrawal from "./components/Withdrawal";
+import Deposit from "./pages/Deposit";
+import HomePage from "./pages/HomePage";
+import Minting from "./pages/Minting";
+import Transfer from "./pages/Transfer";
+import Withdrawal from "./pages/Withdrawal";
 import { Web3AuthProvider } from "./services/web3auth";
 
 function App() {

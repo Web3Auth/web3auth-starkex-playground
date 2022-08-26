@@ -43,7 +43,7 @@ const Sidebar = () => {
     if (provider) {
       try {
         return (
-          <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
+          <div className="sticky px-4 inset-x-0 bottom-0 border-t border-gray-100">
             <div className="flex items-center justify-flex-start py-4 shrink-0 overflow-hidden">
               <img className="object-cover w-10 h-10 rounded-full" src={user.profileImage} referrerPolicy="no-referrer" />
 
@@ -65,7 +65,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="flex flex-col justify-between h-screen bg-white border-r w-64 p-5">
+    <div className="flex flex-col justify-between h-screen bg-white border-r w-64 p-5 lg:flex hidden">
       <div className="py-3">
         <strong className="px-4 block p-1 text-xs font-medium text-gray-400 uppercase">MENU</strong>
         <nav className="flex flex-col mt-6">
