@@ -19,7 +19,7 @@ function renderTab(tabName: string, onClick?: any, active?: boolean) {
 
 function Tabs({ tabData }: TabsProps) {
   return (
-    <nav className="w-full px-4 sm:px-6 lg:px-8 flex text-sm font-medium border-b border-gray-100">
+    <nav className="w-11/12 px-4 sm:px-6 lg:px-8 flex text-sm font-medium border-b border-gray-100">
       {tabData.map((tab) => renderTab(tab.tabName, tab.onClick, tab.active))}
     </nav>
   );

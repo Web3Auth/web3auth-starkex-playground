@@ -79,7 +79,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const uiConsole = (...args: unknown[]): void => {
-    const el = document.querySelector("#console>p");
+    const el = document.querySelector("#console");
     if (el) {
       el.innerHTML = JSON.stringify(args || {}, null, 2);
     }

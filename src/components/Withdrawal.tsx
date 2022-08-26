@@ -1,6 +1,6 @@
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 
 import { useWeb3Auth } from "../services/web3auth";
 import Console from "./Console";
@@ -86,7 +86,7 @@ function Withdrawal() {
         <Sidebar />
         {provider ? (
           <div className="container w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
-            <h1 className="w-11/12 px-4 pt-16 sm:px-6 lg:px-8 text-2xl font-bold text-center text-primary sm:text-3xl">Withdrawal</h1>
+            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">Withdrawal</h1>
             <Tabs tabData={TabData} />
             {tab === "starkex" ? (
               <Form formDetails={formDetailsStarkEx}>
@@ -113,7 +113,7 @@ function Withdrawal() {
           </div>
         ) : (
           <div className="container w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll">
-            <h1 className="text-2xl font-bold text-center text-primary sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
+            <h1 className="text-2xl font-bold text-center sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
             <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
           </div>
         )}
