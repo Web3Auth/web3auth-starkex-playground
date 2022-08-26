@@ -1,0 +1,10 @@
+.dropdownNavbar {
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate3d(397px, 66px, 0px);
+}
+
+.doubleDropdown {
+    position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(10px, 0px, 0px);
+}

@@ -1,91 +1,46 @@
 import { useWeb3Auth } from "../services/web3auth";
-import Console from "./Console";
+import Form from "./Form";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 function HomePage() {
-  const { starkKey, address } = useWeb3Auth();
-
+  const { provider, starkKey, address } = useWeb3Auth();
+  const formDetails = [
+    {
+      label: "Address",
+      input: address as string,
+      readOnly: true,
+    },
+    {
+      label: "Stark Key",
+      input: starkKey as string,
+      readOnly: true,
+    },
+  ];
   return (
-    <>
+    <main className="flex flex-col h-screen">
       <Header />
-
-      <br></br>
-
-      <div className="h-56 grid grid-cols-3 gap-4 content-start">
-        <div className="justify-center w-full">
-          <h1 className="flex items-center justify-center block font-medium text-3xl text-center mb-2 text-slate-600">
-            Welcome to Web3Auth StarkEx Playground
-          </h1>
-          <div className="flex items-center justify-center block text-slate-600 font-bold p-2">Please connect to Web3Auth to get started</div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                address
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                value={address as string}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                stark_key
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                value={starkKey as string}
-                readOnly
-              />
-            </div>
-          </div>
-          {/* <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                token_id
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={tokenId}
-                onChange={(e) => setTokenId(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                amount
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </div>
-          </div> */}
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <div className="container w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center">
+          {provider ? (
+            <>
+              <h1 className="w-11/12 px-4 pt-16 sm:px-6 lg:px-8 text-2xl font-bold text-center text-primary sm:text-3xl">
+                Welcome to Web3Auth StarkEx Playground
+              </h1>
+              <div className="py-16 w-full">
+                <Form heading="Your Account Details" formDetails={formDetails} />
+              </div>
+            </>
+          ) : (
+            <>
+              <h1 className="text-2xl font-bold text-center text-primary sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
+              <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
+            </>
+          )}
         </div>
-        {/* <button className="flex rounded-full px-6 py-3 text-white" style={{ backgroundColor: "#0364ff" }}>
-          Send with StarkEx Gateway
-        </button> */}
-        <Console />
       </div>
-    </>
+    </main>
   );
 }
 

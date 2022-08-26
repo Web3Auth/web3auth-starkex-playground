@@ -1,181 +1,124 @@
-/* eslint-disable import/extensions */
-/* eslint-disable camelcase */
-/* eslint-disable prettier/prettier */
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 
 import { useWeb3Auth } from "../services/web3auth";
 import Console from "./Console";
+import Form from "./Form";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
+import Tabs from "./Tabs";
 
 function Withdrawal() {
   const asset_type = starkwareCrypto.asset.getAssetType({ type: "ETH", data: { quantum: "1" } });
   const asset_id = starkwareCrypto.asset.getAssetId({ type: "ETH", data: { quantum: "1" } });
+  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest } = useWeb3Auth();
+
   const [vaultId, setVaultId] = useState("1654615998");
   const [tokenId, setTokenId] = useState(asset_id);
   const [assetType, setAssetType] = useState(asset_type);
   const [amount, setAmount] = useState("6000000000");
 
-  const { starkKey, onWithdrawalRequest, onL1WithdrawalRequest } = useWeb3Auth();
+  const [tab, setTab] = useState("starkex");
+
+  const formDetailsStarkEx = [
+    {
+      label: "vault_id",
+      input: vaultId as string,
+      onChange: setVaultId,
+    },
+    {
+      label: "stark_key",
+      input: starkKey as string,
+      readOnly: true,
+    },
+    {
+      label: "token_id",
+      input: tokenId as string,
+      onChange: setTokenId,
+    },
+    {
+      label: "amount",
+      input: amount as string,
+      onChange: setAmount,
+    },
+  ];
+
+  const formDetailsL1 = [
+    {
+      label: "vault_id",
+      input: vaultId as string,
+      onChange: setVaultId,
+    },
+    {
+      label: "stark_key",
+      input: starkKey as string,
+      readOnly: true,
+    },
+    {
+      label: "asset_type",
+      input: assetType as string,
+      onChange: setAssetType,
+    },
+    {
+      label: "amount",
+      input: amount as string,
+      onChange: setAmount,
+    },
+  ];
+  const TabData = [
+    {
+      tabName: "StarkEx Withdrawal",
+      onClick: () => setTab("starkex"),
+      active: tab === "starkex",
+    },
+    {
+      tabName: "L1 Withdrawal",
+      onClick: () => setTab("l1"),
+      active: tab === "l1",
+    },
+  ];
+
   return (
-    <>
+    <main className="flex flex-col h-screen">
       <Header />
-
-      <br></br>
-
-      <div className="h-56 grid grid-cols-3 gap-4 content-start">
-        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Withdrawal</h1>
-        <div className="justify-center w-full">
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                vault_id
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="number"
-                value={vaultId}
-                onChange={(e) => setVaultId(e.target.value)}
-              />
-            </div>
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        {provider ? (
+          <div className="container w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
+            <h1 className="w-11/12 px-4 pt-16 sm:px-6 lg:px-8 text-2xl font-bold text-center text-primary sm:text-3xl">Withdrawal</h1>
+            <Tabs tabData={TabData} />
+            {tab === "starkex" ? (
+              <Form formDetails={formDetailsStarkEx}>
+                <button
+                  className="w-full mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
+                  style={{ backgroundColor: "#0364ff" }}
+                  onClick={() => onWithdrawalRequest(amount, tokenId, vaultId)}
+                >
+                  Send with StarkEx Gateway
+                </button>
+              </Form>
+            ) : (
+              <Form formDetails={formDetailsL1}>
+                <button
+                  className="w-full mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
+                  style={{ backgroundColor: "#0364ff" }}
+                  onClick={() => onL1WithdrawalRequest(amount, vaultId, assetType)}
+                >
+                  Withdraw ETH
+                </button>
+              </Form>
+            )}
+            <Console />
           </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                stark_key
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={starkKey as string}
-              />
-            </div>
+        ) : (
+          <div className="container w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll">
+            <h1 className="text-2xl font-bold text-center text-primary sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
+            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
           </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                token_id
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={tokenId}
-                onChange={(e) => setTokenId(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                amount
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <button
-          className="flex rounded-full px-6 py-3 text-white"
-          style={{ backgroundColor: "#0364ff" }}
-          onClick={() => onWithdrawalRequest(amount, tokenId, vaultId)}>
-          Send with StarkEx Gateway
-        </button>
-        <br></br>
-        <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">
-          Withdraw to L1
-        </h1>
-        <div className="justify-center w-full">
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                vault_id
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="number"
-                value={vaultId}
-                onChange={(e) => setVaultId(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                stark_key
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={starkKey as string}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                assetType
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={assetType}
-                onChange={(e) => setAssetType(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="md:flex md:items-center mb-6">
-            <div className="md:w-1/3">
-              <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
-                amount
-              </label>
-            </div>
-            <div className="md:w-1/3">
-              <input
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-                id="inline-full-name"
-                type="text"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <button
-          className="flex rounded-full px-6 py-3 text-white"
-          style={{ backgroundColor: "#0364ff" }}
-          onClick={() => onL1WithdrawalRequest(amount, vaultId, assetType)}>
-          Withdraw ETH
-        </button>
-        <Console />
+        )}
       </div>
-    </>
+    </main>
   );
 }
 

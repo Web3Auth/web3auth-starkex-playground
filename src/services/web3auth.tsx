@@ -9,9 +9,9 @@ export interface IWeb3AuthContext {
   web3Auth: Web3Auth | null;
   provider: IWalletProvider | null;
   isLoading: boolean;
-  user: unknown;
-  starkKey: unknown;
-  address: unknown;
+  user: any;
+  starkKey: any;
+  address: any;
   login: () => Promise<void>;
   logout: () => Promise<void>;
   getUserInfo: () => Promise<any>;
@@ -75,7 +75,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const [provider, setProvider] = useState<IWalletProvider | null>(null);
   const [starkKey, setStarkKey] = useState<IWalletProvider | null>(null);
   const [address, setAddress] = useState<IWalletProvider | null>(null);
-  const [user, setUser] = useState<unknown | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const uiConsole = (...args: unknown[]): void => {
@@ -95,10 +95,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   useEffect(() => {
     const subscribeAuthEvents = (web3auth: Web3Auth) => {
       // Can subscribe to all ADAPTER_EVENTS and LOGIN_MODAL_EVENTS
-      web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: unknown) => {
+      web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data: any) => {
         uiConsole("Yeah!, you are successfully logged in", data);
-        setUser(data);
         setWalletProvider(web3auth.provider!);
+        const userDetails = await web3auth.getUserInfo();
+        setUser(userDetails);
         // getStarkKey();
       });
 
