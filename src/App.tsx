@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Deposit from "./pages/Deposit";
 import HomePage from "./pages/HomePage";
 import Minting from "./pages/Minting";
+import Settlement from "./pages/Settlement";
 import Transfer from "./pages/Transfer";
 import Withdrawal from "./pages/Withdrawal";
 import { Web3AuthProvider } from "./services/web3auth";
@@ -21,6 +22,7 @@ function App() {
               <Route path="withdrawal" element={<Withdrawal />} />
               <Route path="minting" element={<Minting />} />
               <Route path="transfer" element={<Transfer />} />
+              <Route path="settlement" element={<Settlement />} />
             </Route>
           </Routes>
         </BrowserRouter>

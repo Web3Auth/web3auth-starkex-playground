@@ -21,6 +21,9 @@ const Sidebar = () => {
   function goToTransfer() {
     navigate("/transfer");
   }
+  function goToSettlement() {
+    navigate("/settlement");
+  }
   const location = useLocation();
   function linktoGo(label: string, path: any) {
     return (
@@ -74,6 +77,7 @@ const Sidebar = () => {
           {location.pathname === "/deposit" ? activePage("Deposit") : linktoGo("Deposit", goToDeposit)}
           {location.pathname === "/minting" ? activePage("Minting") : linktoGo("Minting", goToMinting)}
           {location.pathname === "/transfer" ? activePage("Transfer") : linktoGo("Transfer", goToTransfer)}
+          {location.pathname === "/settlement" ? activePage("Settlement") : linktoGo("Settlement", goToSettlement)}
         </nav>
       </div>
       {userProfile()}
