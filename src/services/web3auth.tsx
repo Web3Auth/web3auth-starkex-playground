@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/web3auth";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";

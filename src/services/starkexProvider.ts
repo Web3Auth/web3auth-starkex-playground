@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 // @ts-ignore
 import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
 // @ts-ignore
