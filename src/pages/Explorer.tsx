@@ -91,7 +91,16 @@ function Explorer() {
     } else if (tab === "batches") {
       return <Table />;
     }
-    return <Table />;
+    return (
+      <div className="w-full flex flex-row px-4 sm:px-6 lg:px-8 items-center">
+        <div className="w-8/12 flex flex-row px-4 sm:px-6 lg:px-8 items-center">
+          <Table />
+        </div>
+        <div className="w-4/12 flex flex-row px-4 sm:px-6 lg:px-8 items-center">
+          <Console />
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -104,7 +113,6 @@ function Explorer() {
             <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">StarkEx Explorer</h1>
             <Tabs tabData={TabData} />
             {renderTabs()}
-            <Console />
           </div>
         ) : (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll p-4">
