@@ -81,8 +81,6 @@ const Drawer = ({ isOpen, setOpen }: DrawerProps) => {
               {location.pathname === "/deposit" ? activePage("Deposit") : linktoGo("Deposit", goToDeposit)}
               {location.pathname === "/minting" ? activePage("Minting") : linktoGo("Minting", goToMinting)}
               {location.pathname === "/transfer" ? activePage("Transfer") : linktoGo("Transfer", goToTransfer)}
-              {location.pathname === "/settlement" ? activePage("Settlement") : linktoGo("Settlement", goToHome)}
-              {location.pathname === "/explorer" ? activePage("StarkEx Explorer") : linktoGo("StarkEx Explorer", goToHome)}
               {provider ? (
                 <div
                   onClick={() => {
