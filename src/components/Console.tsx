@@ -1,10 +1,10 @@
 const Console = () => {
   return (
-    <div className="flex-col w-full">
-      <h1 className="flex justify-center md:items-center items-center font-medium leading-tight text-3xl mt-0 mb-2 text-slate-600">Response</h1>
-      <div className="justify-center w-full">
-        <div className="md:flex md:items-center p-4 m-4 bg-gray-200 overflow-scroll" id="console">
-          <p className="font-mono overflow-scroll	"></p>
+    <div className="w-11/12 px-4 py-16 sm:px-6 lg:px-8 flex-col">
+      <p className="text-lg font-bold">Response</p>
+      <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
+        <div className="md:flex items-flex-start p-1 bg-gray-200 overflow-scroll max-h-72">
+          <pre className="font-mono overflow-scroll w-full" id="console"></pre>
         </div>
       </div>
     </div>
