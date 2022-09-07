@@ -255,50 +255,59 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const onSettlementRequest = async (): Promise<any> => {
+  const onSettlementRequest = async (settlementInfo: any, party_a_order: any, party_b_order: any): Promise<any> => {
     try {
       const account = await getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
       const publicKeyY = account.pub.getY().toString("hex");
-      const request = {
-        tx: {
-          type: "TransferRequest",
-          amount: "100",
-          expirationTimestamp: 516578,
-          nonce: 624865484,
-          receiverPublicKey: "0x011869c13b32ab9b7ec84e2b31c1de58baaaa6bbb2443a33bbad8df739a6e958",
-          receiverVaultId: 1478152318,
-          senderPublicKey: "0x0435a5f41a1109379a143f931b6d2062623be35cc688a4f896e8689a1dd6f5c6",
-          senderVaultId: 1252694399,
-          signature: {
-            r: "5d14357fcf8f489218de0855267c6f64bc463135debf62680ad796e63cd6d3b",
-            s: "786ab874d91e3a5871134955fcb768914754760a0ada326af67f758f32819cf",
+      const tx_id = await starkExAPI.gateway.getFirstUnusedTxId();
+      const response = await fetch("https://gw.playground-v2.starkex.co/v2/gateway/add_transaction", {
+        headers: {
+          accept: "application/json, text/plain, */*",
+        },
+        body: JSON.stringify({
+          tx: {
+            party_b_order: {
+              expiration_timestamp: party_b_order.expirationTimestamp,
+              eth_address: "0xDABadaBadabADaBadabADabAdabadABadAbadAbA",
+              amount_buy: "140",
+              amount_sell: "50",
+              fee_info: { fee_limit: "2000", token_id: "0x20", source_vault_id: 1 },
+              order_type: 0,
+              vault_id_sell: 1,
+              nonce: 1,
+              token_sell: "0x20",
+              token_buy: "0x10",
+              vault_id_buy: 2,
+              type: "OrderL1Request",
+            },
+            settlement_info: {
+              party_a_sold: "75",
+              party_b_sold: "25",
+              party_b_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
+              party_a_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
+            },
+            party_a_order: {
+              expiration_timestamp: 642956,
+              amount_buy: "40",
+              signature: { s: "0x0", r: "0x0" },
+              amount_sell: "150",
+              fee_info: { fee_limit: "1000", token_id: "0x10", source_vault_id: 48 },
+              order_type: 0,
+              vault_id_sell: 48,
+              nonce: 0,
+              public_key: "0x70",
+              token_sell: "0x10",
+              token_buy: "0x20",
+              vault_id_buy: 64,
+              type: "OrderL2Request",
+            },
+            type: "SettlementRequest",
           },
-          token: "0xb333e3142fe16b78628f19bb15afddaef437e72d6d7f5c6c20c6801a27fba7",
-        },
-        feeTx: {
-          type: "TransferRequest",
-          amount: "100",
-          expirationTimestamp: 516578,
-          nonce: 624865484,
-          receiverPublicKey: "0x011869c13b32ab9b7ec84e2b31c1de58baaaa6bbb2443a33bbad8df739a6e958",
-          receiverVaultId: 1478152318,
-          senderPublicKey: "0x0435a5f41a1109379a143f931b6d2062623be35cc688a4f896e8689a1dd6f5c6",
-          senderVaultId: 1252694399,
-          signature: {
-            r: "5d14357fcf8f489218de0855267c6f64bc463135debf62680ad796e63cd6d3b",
-            s: "786ab874d91e3a5871134955fcb768914754760a0ada326af67f758f32819cf",
-          },
-          token: "0xb333e3142fe16b78628f19bb15afddaef437e72d6d7f5c6c20c6801a27fba7",
-        },
-        starkPublicKey: {
-          x: publicKeyX,
-          y: publicKeyY,
-        },
-        memo: "my reference",
-        partnerId: "xxyyzz",
-      };
-      const response = await starkExAPI.gateway.settlement(request);
+          tx_id,
+        }),
+        method: "POST",
+      });
       return response;
     } catch (error) {
       return error as string;
