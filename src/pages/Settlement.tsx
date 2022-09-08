@@ -81,7 +81,7 @@ const sampleOrderL2: OrderL2 = {
   expirationTimestamp: 642956,
   feeInfo: {
     feeLimit: 1000,
-    tokenId: "0x20",
+    tokenId: "0x10",
     sourceVaultId: 48,
   },
   signature: {
@@ -89,7 +89,7 @@ const sampleOrderL2: OrderL2 = {
     r: "0x0",
   },
   orderType: 0,
-  type: "OrderL1Request",
+  type: "OrderL2Request",
 };
 
 function Settlement() {
@@ -265,7 +265,7 @@ function Settlement() {
             <button
               className="w-10/12 mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
               style={{ backgroundColor: "#0364ff" }}
-              onClick={() => onSettlementRequest({}, OrderL11, OrderL12)}>
+              onClick={() => onSettlementRequest({}, OrderL12, OrderL11)}>
               Send with StarkEx Gateway
             </button>
             <Console />
