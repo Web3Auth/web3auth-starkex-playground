@@ -5,6 +5,7 @@ import { useState } from "react";
 import Console from "../components/Console";
 import Form from "../components/Form";
 import Header from "../components/Header";
+import MultiForm from "../components/MultiForm";
 import Sidebar from "../components/Sidebar";
 import { useWeb3Auth } from "../services/web3auth";
 
@@ -97,72 +98,101 @@ function Settlement() {
   const [OrderL11, setOrderL11] = useState(sampleOrderL1 as OrderL1);
   const [OrderL12, setOrderL12] = useState(sampleOrderL2 as OrderL2);
 
-  function OrderL1Request(order: OrderL1, setOrder: any): any[] {
+  const [nonce1, setNonce1] = useState(sampleOrderL1.nonce);
+  const [orderType1, setOrderType1] = useState(sampleOrderL1.orderType);
+  const [ethAddress1, setEthAddress1] = useState(sampleOrderL1.ethAddress);
+  const [amountSell1, setAmountSell1] = useState(sampleOrderL1.amountSell);
+  const [amountBuy1, setAmountBuy1] = useState(sampleOrderL1.amountSell);
+  const [tokenSell1, setTokenSell1] = useState(sampleOrderL1.tokenSell);
+  const [tokenBuy1, setTokenBuy1] = useState(sampleOrderL1.tokenBuy);
+  const [feeInfoTokenId1, setFeeInfoTokenId1] = useState(sampleOrderL1.feeInfo.tokenId);
+  const [feeInfoSourceVaultId1, setfeeInfoSourceVaultId1] = useState(sampleOrderL1.feeInfo.sourceVaultId);
+  const [feeInfoFeeLimit1, setFeeInfoFeeLimit1] = useState(sampleOrderL1.feeInfo.feeLimit);
+  const [expirationTime1, setExpirationTime1] = useState(sampleOrderL1.expirationTimestamp);
+  const [vaultIdSell1, setVaultIdSell1] = useState(sampleOrderL1.vaultIdSell);
+  const [vaultIdBuy1, setVaultIdBuy1] = useState(sampleOrderL1.vaultIdBuy);
+
+  const [nonce2, setNonce2] = useState(sampleOrderL2.nonce);
+  const [orderType2, setOrderType2] = useState(sampleOrderL1.orderType);
+  const [amountSell2, setAmountSell2] = useState(sampleOrderL2.amountSell);
+  const [amountBuy2, setAmountBuy2] = useState(sampleOrderL2.amountSell);
+  const [tokenSell2, setTokenSell2] = useState(sampleOrderL2.tokenSell);
+  const [tokenBuy2, setTokenBuy2] = useState(sampleOrderL2.tokenBuy);
+  const [feeInfoTokenId2, setFeeInfoTokenId2] = useState(sampleOrderL2.feeInfo.tokenId);
+  const [feeInfoSourceVaultId2, setfeeInfoSourceVaultId2] = useState(sampleOrderL2.feeInfo.sourceVaultId);
+  const [feeInfoFeeLimit2, setFeeInfoFeeLimit2] = useState(sampleOrderL2.feeInfo.feeLimit);
+  const [expirationTime2, setExpirationTime2] = useState(sampleOrderL2.expirationTimestamp);
+  const [vaultIdSell2, setVaultIdSell2] = useState(sampleOrderL2.vaultIdSell);
+  const [vaultIdBuy2, setVaultIdBuy2] = useState(sampleOrderL2.vaultIdBuy);
+  const [signatureR2, setSignatureR2] = useState(sampleOrderL2.signature.r);
+  const [signatureS2, setSignatureS2] = useState(sampleOrderL2.signature.s);
+
+  function OrderL1Request(order: any, setOrder: any): any[] {
     return [
       {
         label: "nonce",
-        input: order.nonce as unknown as string,
-        onChange: setOrder,
+        input: nonce1,
+        onChange: setNonce1,
       },
       {
         label: "order_type",
-        input: order.orderType as unknown as string,
-        onChange: setOrder,
+        input: orderType1,
+        onChange: setOrderType1,
       }, //
       {
         label: "eth_address",
-        input: order.ethAddress as string,
-        onChange: setOrder,
+        input: ethAddress1,
+        onChange: setEthAddress1,
       },
       {
         label: "amount_sell",
-        input: order.amountSell as unknown as string,
-        onChange: setOrder,
+        input: amountSell1,
+        onChange: setAmountSell1,
       },
       {
         label: "amount_buy",
-        input: order.amountBuy as unknown as string,
-        onChange: setOrder,
+        input: amountBuy1,
+        onChange: setAmountBuy1,
       },
       {
         label: "token_sell",
-        input: order.tokenSell as unknown as string,
-        onChange: setOrder,
+        input: tokenSell1,
+        onChange: setTokenSell1,
       },
       {
         label: "token_buy",
-        input: order.tokenBuy as unknown as string,
-        onChange: setOrder,
+        input: tokenBuy1,
+        onChange: setTokenBuy1,
       },
       {
         label: "vault_id_sell",
-        input: order.vaultIdSell as unknown as string,
-        onChange: setOrder,
+        input: vaultIdSell1,
+        onChange: setVaultIdSell1,
       },
       {
         label: "vault_id_buy",
-        input: order.vaultIdBuy as unknown as string,
-        onChange: setOrder,
+        input: vaultIdBuy1,
+        onChange: setVaultIdBuy1,
       },
       {
         label: "expiration_timestamp",
-        input: order.expirationTimestamp as unknown as string,
-        onChange: setOrder,
+        input: expirationTime1,
+        onChange: setExpirationTime1,
       },
       {
         label: "fee_info.feeLimit",
-        input: order.feeInfo.feeLimit as unknown as string,
-        onChange: setOrder,
+        input: feeInfoFeeLimit1,
+        onChange: setFeeInfoFeeLimit1,
       },
       {
         label: "fee_info.sourceVaultId",
-        input: order.feeInfo.sourceVaultId as unknown as string,
-        onChange: setOrder,
+        input: feeInfoSourceVaultId1 as unknown as string,
+        onChange: setfeeInfoSourceVaultId1,
       },
       {
         label: "fee_info.tokenId",
-        input: order.feeInfo.tokenId as unknown as string,
-        onChange: setOrder,
+        input: feeInfoTokenId1,
+        onChange: setFeeInfoTokenId1,
       },
     ];
   }
@@ -171,74 +201,74 @@ function Settlement() {
     return [
       {
         label: "nonce",
-        input: order.nonce as unknown as string,
-        onChange: setOrder,
+        input: nonce2,
+        onChange: setNonce2,
       },
       {
         label: "order_type",
-        input: order.orderType as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: orderType2,
+        onChange: setOrderType2,
+      },
       {
         label: "amount_sell",
-        input: order.amountSell as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: amountSell2,
+        onChange: setAmountSell2,
+      },
       {
         label: "amount_buy",
-        input: order.amountBuy as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: amountBuy2,
+        onChange: setAmountBuy2,
+      },
       {
         label: "token_sell",
-        input: order.tokenSell as unknown as string,
-        onChange: setOrder,
+        input: tokenSell2,
+        onChange: setTokenSell2,
       },
       {
         label: "token_buy",
-        input: order.tokenBuy as unknown as string,
-        onChange: setOrder,
+        input: tokenBuy2,
+        onChange: setTokenBuy2,
       },
       {
         label: "vault_id_sell",
-        input: order.vaultIdSell as unknown as string,
-        onChange: setOrder,
+        input: vaultIdSell2,
+        onChange: setVaultIdSell2,
       },
       {
         label: "vault_id_buy",
-        input: order.vaultIdBuy as unknown as string,
-        onChange: setOrder,
+        input: vaultIdBuy2,
+        onChange: setVaultIdBuy2,
       },
       {
         label: "expiration_timestamp",
-        input: order.expirationTimestamp as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: expirationTime2,
+        onChange: setExpirationTime2,
+      },
       {
         label: "fee_info.feeLimit",
-        input: order.feeInfo.feeLimit as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: feeInfoFeeLimit2,
+        onChange: setFeeInfoFeeLimit2,
+      },
       {
         label: "fee_info.sourceVaultId",
-        input: order.feeInfo.sourceVaultId as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: feeInfoSourceVaultId2 as unknown as string,
+        onChange: setfeeInfoSourceVaultId2,
+      },
       {
         label: "fee_info.tokenId",
-        input: order.feeInfo.tokenId as unknown as string,
-        onChange: setOrder,
-      }, //
+        input: feeInfoTokenId2,
+        onChange: setFeeInfoTokenId2,
+      },
       {
-        label: "signature.r",
-        input: order.signature.r as unknown as string,
-        onChange: setOrder,
-      }, //
+        label: "singature.r",
+        input: signatureR2,
+        onChange: setSignatureR2,
+      },
       {
-        label: "signature.s",
-        input: order.signature.s as unknown as string,
-        onChange: setOrder,
-      }, //
+        label: "singature.s",
+        input: signatureS2,
+        onChange: setSignatureS2,
+      },
     ];
   }
 
@@ -255,10 +285,10 @@ function Settlement() {
             <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">Settlement</h1>
             <div className="md:w-11/12 w-full md:flex justify-center align-center">
               <div className="w-full flex justify-center align-center">
-                <Form heading="OrderL1Request" headingCenter formDetails={formDetails1}></Form>
+                <MultiForm heading="OrderL1Request" headingCenter formDetails={formDetails1}></MultiForm>
               </div>
               <div className="w-full flex justify-center align-center">
-                <Form heading="OrderL2Request" headingCenter formDetails={formDetails2}></Form>
+                <MultiForm heading="OrderL2Request" headingCenter formDetails={formDetails2}></MultiForm>
               </div>
             </div>
 
