@@ -255,50 +255,70 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const onSettlementRequest = async (): Promise<any> => {
+  const onSettlementRequest = async (settlementInfo: any, party_a_order: any, party_b_order: any): Promise<any> => {
     try {
       const account = await getStarkAccount();
       const publicKeyX = account.pub.getX().toString("hex");
       const publicKeyY = account.pub.getY().toString("hex");
-      const request = {
-        tx: {
-          type: "TransferRequest",
-          amount: "100",
-          expirationTimestamp: 516578,
-          nonce: 624865484,
-          receiverPublicKey: "0x011869c13b32ab9b7ec84e2b31c1de58baaaa6bbb2443a33bbad8df739a6e958",
-          receiverVaultId: 1478152318,
-          senderPublicKey: "0x0435a5f41a1109379a143f931b6d2062623be35cc688a4f896e8689a1dd6f5c6",
-          senderVaultId: 1252694399,
-          signature: {
-            r: "5d14357fcf8f489218de0855267c6f64bc463135debf62680ad796e63cd6d3b",
-            s: "786ab874d91e3a5871134955fcb768914754760a0ada326af67f758f32819cf",
+      const tx_id = await starkExAPI.gateway.getFirstUnusedTxId();
+      const response = await fetch("https://gw.playground-v2.starkex.co/v2/gateway/add_transaction", {
+        headers: {
+          accept: "application/json, text/plain, */*",
+        },
+        body: JSON.stringify({
+          tx: {
+            party_b_order: {
+              expiration_timestamp: party_b_order.expirationTimestamp,
+              eth_address: `${party_b_order.ethAddress}`,
+              amount_buy: `${party_b_order.amountBuy}`,
+              amount_sell: `${party_b_order.amountSell}`,
+              fee_info: {
+                fee_limit: `${party_b_order.feeInfo.feeLimit}`,
+                token_id: `${party_b_order.feeInfo.tokenId}`,
+                source_vault_id: `${party_b_order.feeInfo.sourceVaultId}`,
+              },
+              order_type: party_b_order.orderType,
+              vault_id_sell: party_b_order.vaultIdSell,
+              nonce: party_b_order.nonce,
+              token_sell: `${party_b_order.tokenSell}`,
+              token_buy: `${party_b_order.tokenBuy}`,
+              vault_id_buy: party_b_order.vaultIdBuy,
+              type: party_b_order.type,
+            },
+            settlement_info: {
+              party_a_sold: "75",
+              party_b_sold: "25",
+              party_b_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
+              party_a_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
+            },
+            party_a_order: {
+              expiration_timestamp: party_a_order.expirationTimestamp,
+              amount_buy: `${party_a_order.amountBuy}`,
+              signature: {
+                s: `${party_a_order.signature.s}`,
+                r: `${party_a_order.signature.r}`,
+              },
+              amount_sell: `${party_a_order.amountSell}`,
+              fee_info: {
+                fee_limit: `${party_a_order.feeInfo.feeLimit}`,
+                token_id: `${party_a_order.feeInfo.tokenId}`,
+                source_vault_id: party_a_order.feeInfo.sourceVaultId,
+              },
+              order_type: party_a_order.orderType,
+              vault_id_sell: party_a_order.vaultIdSell,
+              nonce: party_a_order.nonce,
+              public_key: party_a_order.publicKey,
+              token_sell: `${party_a_order.tokenSell}`,
+              token_buy: `${party_a_order.tokenBuy}`,
+              vault_id_buy: party_a_order.vaultIdBuy,
+              type: `${party_a_order.type}`,
+            },
+            type: "SettlementRequest",
           },
-          token: "0xb333e3142fe16b78628f19bb15afddaef437e72d6d7f5c6c20c6801a27fba7",
-        },
-        feeTx: {
-          type: "TransferRequest",
-          amount: "100",
-          expirationTimestamp: 516578,
-          nonce: 624865484,
-          receiverPublicKey: "0x011869c13b32ab9b7ec84e2b31c1de58baaaa6bbb2443a33bbad8df739a6e958",
-          receiverVaultId: 1478152318,
-          senderPublicKey: "0x0435a5f41a1109379a143f931b6d2062623be35cc688a4f896e8689a1dd6f5c6",
-          senderVaultId: 1252694399,
-          signature: {
-            r: "5d14357fcf8f489218de0855267c6f64bc463135debf62680ad796e63cd6d3b",
-            s: "786ab874d91e3a5871134955fcb768914754760a0ada326af67f758f32819cf",
-          },
-          token: "0xb333e3142fe16b78628f19bb15afddaef437e72d6d7f5c6c20c6801a27fba7",
-        },
-        starkPublicKey: {
-          x: publicKeyX,
-          y: publicKeyY,
-        },
-        memo: "my reference",
-        partnerId: "xxyyzz",
-      };
-      const response = await starkExAPI.gateway.settlement(request);
+          tx_id: `${tx_id}`,
+        }),
+        method: "POST",
+      });
       return response;
     } catch (error) {
       return error as string;

@@ -35,7 +35,7 @@ export interface IWeb3AuthContext {
     signaturer: string,
     signatures: string
   ) => Promise<void>;
-  onSettlementRequest: () => Promise<void>;
+  onSettlementRequest: (settlementInfo: any, party_a_order: any, party_b_order: any) => Promise<void>;
 }
 
 export const Web3AuthContext = createContext<IWeb3AuthContext>({
@@ -296,13 +296,13 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     );
   };
 
-  const onSettlementRequest = async () => {
+  const onSettlementRequest = async (settlementInfo: any, party_a_order: any, party_b_order: any) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onSettlementRequest();
+    await provider.onSettlementRequest(settlementInfo, party_a_order, party_b_order);
   };
 
   const contextProvider = {

@@ -25,7 +25,7 @@ export interface IWalletProvider {
     signaturer: string,
     signatures: string
   ) => Promise<void>;
-  onSettlementRequest: () => Promise<void>;
+  onSettlementRequest: (settlementInfo: any, party_a_order: any, party_b_order: any) => Promise<void>;
 }
 
 export const getWalletProvider = (provider: SafeEventEmitterProvider | null, uiConsole: any): IWalletProvider => {

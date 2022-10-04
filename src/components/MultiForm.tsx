@@ -7,12 +7,12 @@ interface FormProps {
   children?: JSX.Element | JSX.Element[];
 }
 
-function Form({ heading, headingCenter, formDetails, children }: FormProps) {
+function MultiForm({ heading, headingCenter, formDetails, children }: FormProps) {
   return (
     <div className="w-11/12 px-4 sm:px-6 lg:px-8  z-0">
       <p className={`text-lg font-bold ${headingCenter ? "text-center" : ""}`}>{heading}</p>
       <form action="" className="p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
-        {formDetails.map((formDetail) => (
+        {formDetails.map((formDetail, index) => (
           <div key={formDetail.label}>
             <label className="text-sm font-medium">{formDetail.label}</label>
             <div className="relative mt-1">
@@ -44,4 +44,4 @@ function Form({ heading, headingCenter, formDetails, children }: FormProps) {
   );
 }
 
-export default Form;
+export default MultiForm;
