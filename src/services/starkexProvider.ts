@@ -1,5 +1,5 @@
 // @ts-ignore
-import StarkExAPI from "@starkware-industries/starkex-js";
+import StarkExAPI, { TransferRequest } from "@starkware-industries/starkex-js";
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
@@ -261,7 +261,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
         memo: "my reference",
         partnerId: "xxyyzz",
       };
-      const response = await starkExAPI.gateway.transfer(request);
+      const response = await starkExAPI.gateway.transfer(request as unknown as TransferRequest);
       return response;
     } catch (error) {
       return error as string;

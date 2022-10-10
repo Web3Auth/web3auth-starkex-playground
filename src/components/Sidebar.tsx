@@ -32,8 +32,8 @@ const Sidebar = () => {
     return (
       <div
         onClick={() => path()}
-        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer"
-      >
+        // eslint-disable-next-line prettier/prettier
+        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer">
         <span className="text-sm font-normal">{label}</span>
       </div>
     );

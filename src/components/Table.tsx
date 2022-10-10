@@ -1,9 +1,4 @@
-import {
-  JSXElementConstructor,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
-} from "react";
+import { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal } from "react";
 
 const Table = (props) => {
   const { l1TransactionData, columnNames } = props;
@@ -14,21 +9,11 @@ const Table = (props) => {
           <table className="w-full text-sm divide-y divide-gray-200 table-fixed">
             <thead className="w-full">
               <tr>
-                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">
-                  Transaction Hash
-                </th>
-                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/6">
-                  Block
-                </th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">
-                  From
-                </th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">
-                  To
-                </th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">
-                  Transaction Fee
-                </th>
+                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">Transaction Hash</th>
+                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/6">Block</th>
+                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">From</th>
+                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">To</th>
+                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">Transaction Fee</th>
               </tr>
             </thead>
 
@@ -37,9 +22,7 @@ const Table = (props) => {
                 return (
                   <tr>
                     {columnNames.map((columnName) => (
-                      <td className="p-4 font-medium whitespace-nowrap truncate">
-                        {item[`${columnName}`]}
-                      </td>
+                      <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
                     ))}
                   </tr>
                 );
