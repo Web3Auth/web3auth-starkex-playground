@@ -80,6 +80,28 @@ const starkexProvider = (
     }
   };
 
+  const getLastBatchId = async (): Promise<any> => {
+    try {
+      const lastBatch = await starkExAPI.gateway.getLastBatchId();
+      uiConsole(lastBatch);
+      return lastBatch;
+    } catch (error) {
+      uiConsole(error);
+      return error as string;
+    }
+  };
+  const getLastBatch = async (): Promise<any> => {
+    try {
+      const lastBatch = await starkExAPI.gateway.getLastBatchId();
+      uiConsole(lastBatch);
+      const lastBatchInfo = await starkExAPI.gatewaygetBatchInfo(lastBatch);
+      return lastBatch;
+    } catch (error) {
+      uiConsole(error);
+      return error as string;
+    }
+  };
+
   const onMintRequest = async (
     amount: string,
     tokenId: string,
@@ -422,6 +444,7 @@ const starkexProvider = (
     getETHAddress,
     getStarkAccount,
     getStarkKey,
+    getLastBatchId,
     onViewBalanceRequest,
     onMintRequest,
     onDepositRequest,

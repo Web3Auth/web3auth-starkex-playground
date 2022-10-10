@@ -9,6 +9,7 @@ import Sidebar from "../components/Sidebar";
 import Table from "../components/Table";
 import Tabs from "../components/Tabs";
 import { useWeb3Auth } from "../services/web3auth";
+import getLastBatchId from "../services/starkexProvider";
 
 function Explorer() {
   const asset_type = starkwareCrypto.asset.getAssetType({
@@ -71,7 +72,9 @@ function Explorer() {
       .catch((err) => console.error(err));
   };
 
-  const getStarkExData = async () => {};
+  const getStarkExData = async () => {
+    // getLastBatchId();
+  };
 
   const formDetailsL1 = [
     {
