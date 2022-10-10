@@ -94,7 +94,7 @@ const starkexProvider = (
     try {
       const lastBatch = await starkExAPI.gateway.getLastBatchId();
       uiConsole(lastBatch);
-      const lastBatchInfo = await starkExAPI.gatewaygetBatchInfo(lastBatch);
+      const lastBatchInfo = await starkExAPI.gateway.getBatchInfo(lastBatch);
       return lastBatch;
     } catch (error) {
       uiConsole(error);
