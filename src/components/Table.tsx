@@ -18,15 +18,16 @@ const Table = (props) => {
             </thead>
 
             <tbody className="divide-y divide-gray-100">
-              {l1TransactionData.map((item) => {
-                return (
-                  <tr>
-                    {columnNames.map((columnName) => (
-                      <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
-                    ))}
-                  </tr>
-                );
-              })}
+              {l1TransactionData.length > 0 &&
+                l1TransactionData.map((item) => {
+                  return (
+                    <tr>
+                      {columnNames.map((columnName) => (
+                        <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
