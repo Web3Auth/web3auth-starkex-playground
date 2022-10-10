@@ -72,16 +72,6 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
-  const getLastBatchId = async (): Promise<any> => {
-    try {
-      const lastBatch = await starkExAPI.gateway.getLastBatchId();
-      uiConsole(lastBatch);
-      return lastBatch;
-    } catch (error) {
-      uiConsole(error);
-      return error as string;
-    }
-  };
   const getLastBatch = async (): Promise<any> => {
     try {
       const lastBatch = await starkExAPI.gateway.getLastBatchId();
@@ -358,7 +348,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     getETHAddress,
     getStarkAccount,
     getStarkKey,
-    getLastBatchId,
+    getLastBatch,
     onViewBalanceRequest,
     onMintRequest,
     onDepositRequest,
