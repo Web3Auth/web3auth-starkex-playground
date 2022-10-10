@@ -1,5 +1,5 @@
 // @ts-ignore
-import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
+import StarkExAPI from "@starkware-industries/starkex-js";
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
@@ -77,9 +77,8 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       console.log(starkExAPI);
       const lastBatch = await starkExAPI.feederGateway.getLastBatchId();
       console.log(lastBatch);
-      // uiConsole(lastBatch);
-      const lastBatchInfo = await starkExAPI.gateway.getBatchInfo(lastBatch);
-      return lastBatch;
+      const lastBatchInfo = await starkExAPI.feederGateway.getBatchInfo(lastBatch);
+      return lastBatchInfo;
     } catch (error) {
       uiConsole(error);
       return error as string;
@@ -150,7 +149,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       };
       const response = await starkExAPI.gateway.deposit(request);
       uiConsole(response);
-      uiConsole(await starkExAPI.gateway.getTransaction(response.txId));
+      uiConsole(await starkExAPI.gateway.getTransaction(response.txId as unknown as number));
     } catch (error) {
       console.log(error);
       uiConsole(error);
