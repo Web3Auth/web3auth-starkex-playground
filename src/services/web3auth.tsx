@@ -23,7 +23,7 @@ export interface IWeb3AuthContext {
   onL1WithdrawalRequest: (amount: string, vaultId: string, assetType: string) => Promise<void>;
   onViewBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
   onViewDepositBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
-  onGetLastBatch: () => Promise<void>;
+  getLastBatch: () => Promise<void>;
   onTransferRequest: (
     amount: string,
     nonce: string,
@@ -57,7 +57,7 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   onWithdrawalRequest: async () => {},
   onL1WithdrawalRequest: async () => {},
   onViewBalanceRequest: async () => {},
-  onGetLastBatch: async () => {},
+  getLastBatch: async () => {},
   onViewDepositBalanceRequest: async () => {},
   onTransferRequest: async () => {},
   onSettlementRequest: async () => {},
@@ -266,11 +266,12 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onViewDepositBalanceRequest(assetId, vaultId);
   };
 
-  const onGetLastBatch = async () => {
+  const getLastBatch = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       return;
     }
+    console.log(await provider.getLastBatch());
     await provider.getLastBatch();
   };
 
@@ -334,7 +335,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     onL1WithdrawalRequest,
     onViewBalanceRequest,
     onViewDepositBalanceRequest,
-    onGetLastBatch,
+    getLastBatch,
     onTransferRequest,
     onSettlementRequest,
   };

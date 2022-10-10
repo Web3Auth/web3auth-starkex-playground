@@ -19,7 +19,7 @@ function Explorer() {
     type: "ETH",
     data: { quantum: "1" },
   });
-  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest } = useWeb3Auth();
+  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest, getLastBatch } = useWeb3Auth();
 
   const [vaultId, setVaultId] = useState("1654615998");
   const [tokenId, setTokenId] = useState(asset_id);
@@ -67,7 +67,8 @@ function Explorer() {
   };
 
   const getStarkExData = async () => {
-    // getLastBatchId();
+    console.log("Explorer.tsx 70");
+    getLastBatch();
   };
 
   const formDetailsL1 = [
@@ -137,6 +138,7 @@ function Explorer() {
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
             <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">StarkEx Explorer</h1>
             <button onClick={getData}>Hello</button>
+            <button onClick={getStarkExData}>Hello 2</button>
             <Tabs tabData={TabData} />
             {renderTabs()}
           </div>

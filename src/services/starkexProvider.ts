@@ -74,8 +74,10 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
 
   const getLastBatch = async (): Promise<any> => {
     try {
-      const lastBatch = await starkExAPI.gateway.getLastBatchId();
-      uiConsole(lastBatch);
+      console.log(starkExAPI);
+      const lastBatch = await starkExAPI.feederGateway.getLastBatchId();
+      console.log(lastBatch);
+      // uiConsole(lastBatch);
       const lastBatchInfo = await starkExAPI.gateway.getBatchInfo(lastBatch);
       return lastBatch;
     } catch (error) {
