@@ -16,6 +16,8 @@ export interface IWeb3AuthContext {
   getUserInfo: () => Promise<any>;
   getStarkAccount: () => Promise<any>;
   getStarkKey: (provider: any) => Promise<any>;
+  getLastBatch: () => Promise<void>;
+  getBatch: (batch: number) => Promise<void>;
   onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onL1DepositRequest: (amount: string, assetType: string, vaultId: string) => Promise<void>;
@@ -23,7 +25,6 @@ export interface IWeb3AuthContext {
   onL1WithdrawalRequest: (amount: string, vaultId: string, assetType: string) => Promise<void>;
   onViewBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
   onViewDepositBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
-  getLastBatch: () => Promise<void>;
   onTransferRequest: (
     amount: string,
     nonce: string,
@@ -51,13 +52,14 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   getUserInfo: async () => {},
   getStarkAccount: async () => {},
   getStarkKey: async () => {},
+  getLastBatch: async () => {},
+  getBatch: async () => {},
   onMintRequest: async () => {},
   onDepositRequest: async () => {},
   onL1DepositRequest: async () => {},
   onWithdrawalRequest: async () => {},
   onL1WithdrawalRequest: async () => {},
   onViewBalanceRequest: async () => {},
-  getLastBatch: async () => {},
   onViewDepositBalanceRequest: async () => {},
   onTransferRequest: async () => {},
   onSettlementRequest: async () => {},
@@ -271,8 +273,15 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
       uiConsole("provider not initialized yet");
       return;
     }
-    console.log(await provider.getLastBatch());
     await provider.getLastBatch();
+  };
+
+  const getBatch = async (batch: number) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.getBatch(batch);
   };
 
   const onTransferRequest = async (
@@ -328,6 +337,8 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     getStarkAccount,
     getStarkKey,
     getETHAddress,
+    getLastBatch,
+    getBatch,
     onMintRequest,
     onDepositRequest,
     onL1DepositRequest,
@@ -335,7 +346,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     onL1WithdrawalRequest,
     onViewBalanceRequest,
     onViewDepositBalanceRequest,
-    getLastBatch,
     onTransferRequest,
     onSettlementRequest,
   };

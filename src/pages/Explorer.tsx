@@ -26,6 +26,7 @@ function Explorer() {
   const [assetType, setAssetType] = useState(asset_type);
   const [amount, setAmount] = useState("6000000000");
   const [l1TransactionData, setL1TransactionData] = useState("");
+  const [starkexBatches, setStarkexBatches] = useState([]);
 
   const [tab, setTab] = useState("l1");
 
@@ -55,7 +56,7 @@ function Explorer() {
   useEffect(() => {
     getData();
   }, []);
-  const getData = () => {
+  const getData = async () => {
     const options = {
       method: "GET",
       headers: {
@@ -68,14 +69,21 @@ function Explorer() {
       .then((response) => response.json())
       .then((response) => {
         setL1TransactionData(response.result);
-        console.log(response);
         return response;
       })
       .catch((err) => console.error(err));
+
+    console.log("batchInfo");
+    const lastBatch = await provider.getLastBatch();
+    const batchInfo = [];
+    for (let index = lastBatch; index > 0; index--) {
+      batchInfo.push(await provider.getBatch(index));
+    }
+    console.log(batchInfo);
+    setStarkexBatches(batchInfo);
   };
 
   const getStarkExData = async () => {
-    console.log("Explorer.tsx 70");
     getLastBatch();
   };
 

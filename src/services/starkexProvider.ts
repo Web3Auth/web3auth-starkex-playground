@@ -78,6 +78,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       const lastBatch = await starkExAPI.feederGateway.getLastBatchId();
       console.log(lastBatch);
       const lastBatchInfo = await starkExAPI.feederGateway.getBatchInfo(lastBatch);
+      return lastBatch;
+    } catch (error) {
+      uiConsole(error);
+      return error as string;
+    }
+  };
+
+  const getBatch = async (batch: number): Promise<any> => {
+    try {
+      const lastBatchInfo = await starkExAPI.feederGateway.getBatchInfo(batch);
       return lastBatchInfo;
     } catch (error) {
       uiConsole(error);
@@ -350,6 +360,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     getStarkAccount,
     getStarkKey,
     getLastBatch,
+    getBatch,
     onViewBalanceRequest,
     onMintRequest,
     onDepositRequest,
