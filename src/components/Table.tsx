@@ -1,7 +1,7 @@
 import { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal } from "react";
 
 const Table = (props) => {
-  const { l1TransactionData, columnNames } = props;
+  const { data, columns } = props;
   return (
     <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
       <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
@@ -9,20 +9,20 @@ const Table = (props) => {
           <table className="w-full text-sm divide-y divide-gray-200 table-fixed">
             <thead className="w-full">
               <tr>
-                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">Transaction Hash</th>
-                <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/6">Block</th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">From</th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">To</th>
-                <th className="p-4 font-medium text-left text-gray-900 whitespace-nowrap w-1/6">Transaction Fee</th>
+                {columns.length > 0 &&
+                  columns.map((item) => {
+                    return <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">{item}</th>;
+                  })}
               </tr>
             </thead>
 
             <tbody className="divide-y divide-gray-100">
-              {l1TransactionData.length > 0 &&
-                l1TransactionData.map((item) => {
+              {data.length > 0 &&
+                data.map((item) => {
+                  console.log(item);
                   return (
                     <tr>
-                      {columnNames.map((columnName) => (
+                      {columns.map((columnName) => (
                         <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
                       ))}
                     </tr>

@@ -1,3 +1,5 @@
+/* eslint-disable promise/no-nesting */
+/* eslint-disable promise/always-return */
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { useEffect, useState } from "react";
@@ -25,7 +27,7 @@ function Explorer() {
   const [tokenId, setTokenId] = useState(asset_id);
   const [assetType, setAssetType] = useState(asset_type);
   const [amount, setAmount] = useState("6000000000");
-  const [l1TransactionData, setL1TransactionData] = useState("");
+  const [l1TransactionData, setL1TransactionData] = useState([]);
   const [starkexBatches, setStarkexBatches] = useState([]);
 
   const [tab, setTab] = useState("l1");
@@ -55,7 +57,27 @@ function Explorer() {
 
   useEffect(() => {
     getData();
+    getStarkexBatches();
   }, []);
+
+  const getStarkexBatches = async () => {
+    provider
+      .getLastBatch()
+      .then((lastBatch) => {
+        const batchInfo = [];
+        for (let index = lastBatch; index > 0; index--) {
+          provider
+            .getBatch(index)
+            .then((batchInfoTemp) => {
+              batchInfo.push(batchInfoTemp);
+            })
+            .catch((err) => console.log(err));
+        }
+        setStarkexBatches(batchInfo);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const getData = async () => {
     const options = {
       method: "GET",
@@ -72,43 +94,8 @@ function Explorer() {
         return response;
       })
       .catch((err) => console.error(err));
-
-    console.log("batchInfo");
-    const lastBatch = await provider.getLastBatch();
-    const batchInfo = [];
-    for (let index = lastBatch; index > 0; index--) {
-      batchInfo.push(await provider.getBatch(index));
-    }
-    console.log(batchInfo);
-    setStarkexBatches(batchInfo);
   };
 
-  const getStarkExData = async () => {
-    getLastBatch();
-  };
-
-  const formDetailsL1 = [
-    {
-      label: "vault_id",
-      input: vaultId as string,
-      onChange: setVaultId,
-    },
-    {
-      label: "stark_key",
-      input: starkKey as string,
-      readOnly: true,
-    },
-    {
-      label: "asset_type",
-      input: assetType as string,
-      onChange: setAssetType,
-    },
-    {
-      label: "amount",
-      input: amount as string,
-      onChange: setAmount,
-    },
-  ];
   const TabData = [
     {
       tabName: "L1 Transactions",
@@ -129,9 +116,10 @@ function Explorer() {
 
   const renderTabs = () => {
     if (tab === "l1") {
-      return <Table l1TransactionData={l1TransactionData} columnNames={["hash", "block_number", "from_address", "to_address", "gas"]} />;
+      return <Table data={l1TransactionData} columns={["hash", "block_number", "from_address", "to_address", "gas"]} />;
     } else if (tab === "batches") {
-      return <Table l1TransactionData={l1TransactionData} columnNames={[]} />;
+      console.log(starkexBatches);
+      return <Table data={starkexBatches} columns={["prev_batch_id", "sequence_number", "time_created"]} />;
     }
     return (
       <div className="w-full flex flex-row px-4 sm:px-6 lg:px-8 items-center">
