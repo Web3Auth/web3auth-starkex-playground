@@ -4,6 +4,7 @@
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
+import JsonFormatter from "react-json-formatter";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -52,12 +53,12 @@ function Explorer() {
       lastBatch = await provider.getLastBatch();
       setLastStarkexBatch(lastBatch);
     } else {
-      lastBatch = lastStarkexBatch - (page - 1) * 10;
+      lastBatch = lastStarkexBatch - (page - 1) * 5;
     }
     if (starkexBatches.length === 0) {
       batchInfo = new Array(lastStarkexBatch);
     }
-    for (let index = lastBatch; index > lastBatch - 10; index--) {
+    for (let index = lastBatch; index > lastBatch - 5; index--) {
       if (!batchInfo[index - 1]) {
         batchInfo[index - 1] = await provider.getBatch(index);
         batchInfo[index - 1].no_of_txns = batchInfo[index - 1].txs_info.length;
@@ -108,7 +109,11 @@ function Explorer() {
   const renderTabs = () => {
     if (tab === "starkex") {
       const columns = ["txn_info"];
-      console.log(l2TransactionData);
+      const jsonStyle = {
+        propertyStyle: { color: "red" },
+        stringStyle: { color: "green" },
+        numberStyle: { color: "darkorange" },
+      };
       return (
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
           <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
@@ -123,7 +128,9 @@ function Explorer() {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-100">{JSON.stringify(l2TransactionData, null, "\t")}</tbody>
+                <tbody className="divide-y divide-gray-100">
+                  <JsonFormatter json={JSON.stringify(l2TransactionData)} tabWith={4} jsonStyle={jsonStyle} />
+                </tbody>
               </table>
             </div>
           </div>

@@ -10408,6 +10408,11 @@
     "react" "15.x.x - 16.x.x"
     "tar" "2.2.2"
 
+"react-json-formatter@^0.3.2":
+  "integrity" "sha512-RjYM+hFcgm4x3Opt+fZCH3LktF6VfcQB/CtJX/SGd2Hko6RvL4dJw/BW17gRg7DLAHM7aKMt/ms/MroARalxoQ=="
+  "resolved" "https://registry.npmjs.org/react-json-formatter/-/react-json-formatter-0.3.2.tgz"
+  "version" "0.3.2"
+
 "react-qr-code@^2.0.8":
   "integrity" "sha512-zYO9EAPQU8IIeD6c6uAle7NlKOiVKs8ji9hpbWPTGxO+FLqBN2on+XCXQvnhm91nrRd306RvNXUkUNcXXSfhWA=="
   "resolved" "https://registry.npmjs.org/react-qr-code/-/react-qr-code-2.0.8.tgz"
@@ -10491,7 +10496,7 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
-"react@^16.8 || ^17 || ^18", "react@^16.x || ^17.x || ^18.x", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=16.8":
+"react@^16.8 || ^17 || ^18", "react@^16.x || ^17.x || ^18.x", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=16.8", "react@>16.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
