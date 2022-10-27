@@ -1,11 +1,10 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable require-atomic-updates */
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 
-import Console from "../components/Console";
-import Form from "../components/Form";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Tabs from "../components/Tabs";
@@ -28,6 +27,7 @@ function Explorer() {
   const [assetType, setAssetType] = useState(asset_type);
   const [amount, setAmount] = useState("6000000000");
   const [l1TransactionData, setL1TransactionData] = useState([]);
+  const [l2TransactionData, setL2TransactionData] = useState([]);
   const [starkexBatches, setStarkexBatches] = useState([]);
   const [lastStarkexBatch, setLastStarkexBatch] = useState(1);
   const [activePage, setActivePage] = useState(1);
@@ -101,13 +101,35 @@ function Explorer() {
     },
     {
       tabName: "StarkEx Transactions",
-      onClick: () => setTab("starkex"),
       active: tab === "starkex",
     },
   ];
 
   const renderTabs = () => {
-    if (tab === "l1") {
+    if (tab === "starkex") {
+      const columns = ["txn_info"];
+      console.log(l2TransactionData);
+      return (
+        <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
+          <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm divide-y divide-gray-200 table-fixed">
+                <thead className="w-full">
+                  <tr>
+                    {columns.length > 0 &&
+                      columns.map((item) => {
+                        return <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">{item}</th>;
+                      })}
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-gray-100">{JSON.stringify(l2TransactionData, null, "\t")}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (tab === "l1") {
       const columns = ["hash", "block_number", "from_address", "to_address", "gas"];
       return (
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
@@ -157,8 +179,7 @@ function Explorer() {
         </div>
       );
     } else if (tab === "batches") {
-      console.log(starkexBatches);
-      const columns = ["prev_batch_id", "sequence_number", "time_created", "no_of_txns"];
+      const columns = ["batch_id", "prev_batch_id", "sequence_number", "no_of_txns", "time_created"];
       return (
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
           <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
@@ -182,7 +203,14 @@ function Explorer() {
                         return (
                           <tr>
                             {columns.map((columnName) => (
-                              <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
+                              <td
+                                className="p-4 font-medium whitespace-nowrap truncate"
+                                onClick={() => {
+                                  setTab("starkex");
+                                  setL2TransactionData(item.txs_info);
+                                }}>
+                                {item[`${columnName}`]}
+                              </td>
                             ))}
                           </tr>
                         );
