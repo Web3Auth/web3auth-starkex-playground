@@ -1,6 +1,17 @@
-import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import { Web3Auth } from "@web3auth/web3auth";
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import {
+  ADAPTER_EVENTS,
+  CHAIN_NAMESPACES,
+  SafeEventEmitterProvider,
+} from "@web3auth/base";
+import { Web3Auth } from "@web3auth/modal";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { getWalletProvider, IWalletProvider } from "./walletProvider";
 
@@ -18,13 +29,36 @@ export interface IWeb3AuthContext {
   getStarkKey: (provider: any) => Promise<any>;
   getLastBatch: () => Promise<void>;
   getBatch: (batch: number) => Promise<void>;
-  onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
-  onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
-  onL1DepositRequest: (amount: string, assetType: string, vaultId: string) => Promise<void>;
-  onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
-  onL1WithdrawalRequest: (amount: string, vaultId: string, assetType: string) => Promise<void>;
+  onMintRequest: (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => Promise<void>;
+  onDepositRequest: (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => Promise<void>;
+  onL1DepositRequest: (
+    amount: string,
+    assetType: string,
+    vaultId: string
+  ) => Promise<void>;
+  onWithdrawalRequest: (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => Promise<void>;
+  onL1WithdrawalRequest: (
+    amount: string,
+    vaultId: string,
+    assetType: string
+  ) => Promise<void>;
   onViewBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
-  onViewDepositBalanceRequest: (assetType: string, vaultId: string) => Promise<void>;
+  onViewDepositBalanceRequest: (
+    assetType: string,
+    vaultId: string
+  ) => Promise<void>;
   onTransferRequest: (
     amount: string,
     nonce: string,
@@ -37,7 +71,11 @@ export interface IWeb3AuthContext {
     signaturer: string,
     signatures: string
   ) => Promise<void>;
-  onSettlementRequest: (settlementInfo: any, party_a_order: any, party_b_order: any) => Promise<void>;
+  onSettlementRequest: (
+    settlementInfo: any,
+    party_a_order: any,
+    party_b_order: any
+  ) => Promise<void>;
 }
 
 export const Web3AuthContext = createContext<IWeb3AuthContext>({
@@ -88,12 +126,15 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     }
   };
 
-  const setWalletProvider = useCallback(async (web3authProvider: SafeEventEmitterProvider | null) => {
-    const walletProvider = getWalletProvider(web3authProvider, uiConsole);
-    setProvider(walletProvider);
-    setStarkKey(await walletProvider?.getStarkKey());
-    setAddress(await walletProvider.getETHAddress());
-  }, []);
+  const setWalletProvider = useCallback(
+    async (web3authProvider: SafeEventEmitterProvider | null) => {
+      const walletProvider = getWalletProvider(web3authProvider, uiConsole);
+      setProvider(walletProvider);
+      setStarkKey(await walletProvider?.getStarkKey());
+      setAddress(await walletProvider.getETHAddress());
+    },
+    []
+  );
 
   useEffect(() => {
     const subscribeAuthEvents = (web3auth: Web3Auth) => {
@@ -124,7 +165,8 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     async function init() {
       try {
         setIsLoading(true);
-        const clientId = "BOBJnF2hVRa4lNWVDSZuFBs3mKeA8_P2gRHvIqsgyGAjg8tnVgTmJOVFF_AtvZNYNVD0OydlF01286JouQs8DIA";
+        const clientId =
+          "BOBJnF2hVRa4lNWVDSZuFBs3mKeA8_P2gRHvIqsgyGAjg8tnVgTmJOVFF_AtvZNYNVD0OydlF01286JouQs8DIA";
         const web3AuthInstance = new Web3Auth({
           chainConfig: {
             displayName: "StarkEx",
@@ -206,7 +248,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     setStarkKey(await provider.getStarkKey());
   };
 
-  const onMintRequest = async (amount: string, tokenId: string, vaultId: string) => {
+  const onMintRequest = async (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
@@ -215,7 +261,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onMintRequest(amount, tokenId, vaultId);
   };
 
-  const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
+  const onDepositRequest = async (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
@@ -224,7 +274,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onDepositRequest(amount, tokenId, vaultId);
   };
 
-  const onL1DepositRequest = async (amount: string, assetType: string, vaultId: string) => {
+  const onL1DepositRequest = async (
+    amount: string,
+    assetType: string,
+    vaultId: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
@@ -233,7 +287,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onL1DepositRequest(amount, assetType, vaultId);
   };
 
-  const onWithdrawalRequest = async (amount: string, tokenId: string, vaultId: string) => {
+  const onWithdrawalRequest = async (
+    amount: string,
+    tokenId: string,
+    vaultId: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
@@ -242,7 +300,11 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onWithdrawalRequest(amount, tokenId, vaultId);
   };
 
-  const onL1WithdrawalRequest = async (amount: string, vaultId: string, assetType: string) => {
+  const onL1WithdrawalRequest = async (
+    amount: string,
+    vaultId: string,
+    assetType: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
@@ -260,7 +322,10 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     await provider.onViewBalanceRequest(assetType, vaultId);
   };
 
-  const onViewDepositBalanceRequest = async (assetId: string, vaultId: string) => {
+  const onViewDepositBalanceRequest = async (
+    assetId: string,
+    vaultId: string
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       return;
@@ -315,13 +380,21 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     );
   };
 
-  const onSettlementRequest = async (settlementInfo: any, party_a_order: any, party_b_order: any) => {
+  const onSettlementRequest = async (
+    settlementInfo: any,
+    party_a_order: any,
+    party_b_order: any
+  ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
-    await provider.onSettlementRequest(settlementInfo, party_a_order, party_b_order);
+    await provider.onSettlementRequest(
+      settlementInfo,
+      party_a_order,
+      party_b_order
+    );
   };
 
   const contextProvider = {
@@ -349,5 +422,9 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     onTransferRequest,
     onSettlementRequest,
   };
-  return <Web3AuthContext.Provider value={contextProvider}>{children}</Web3AuthContext.Provider>;
+  return (
+    <Web3AuthContext.Provider value={contextProvider}>
+      {children}
+    </Web3AuthContext.Provider>
+  );
 };
