@@ -193,11 +193,64 @@ function Explorer() {
                       .map((item) => {
                         return (
                           <tr>
-                            {columns.map((columnName) => (
-                              <td className="p-4 font-medium whitespace-nowrap truncate">
-                                {item[`${columnName}`]}
-                              </td>
-                            ))}
+                            {columns.map((columnName) => {
+                              switch (columnName) {
+                                case "hash":
+                                  return (
+                                    <td className="p-4 font-medium whitespace-nowrap truncate text-blue-500 ">
+                                      <a
+                                        href={`https://goerli.etherscan.io/tx/${item[columnName]}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {item[columnName]}
+                                      </a>
+                                    </td>
+                                  );
+                                case "block_number":
+                                  return (
+                                    <td className="p-4 font-medium whitespace-nowrap truncate text-blue-500">
+                                      <a
+                                        href={`https://goerli.etherscan.io/block/${item[columnName]}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {item[columnName]}
+                                      </a>
+                                    </td>
+                                  );
+                                case "from_address":
+                                  return (
+                                    <td className="p-4 font-medium whitespace-nowrap truncate text-blue-500">
+                                      <a
+                                        href={`https://goerli.etherscan.io/address/${item[columnName]}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {item[columnName]}
+                                      </a>
+                                    </td>
+                                  );
+                                case "to_address":
+                                  return (
+                                    <td className="p-4 font-medium whitespace-nowrap truncate text-blue-500">
+                                      <a
+                                        href={`https://goerli.etherscan.io/address/${item[columnName]}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {item[columnName]}
+                                      </a>
+                                    </td>
+                                  );
+                                default:
+                                  return (
+                                    <td className="p-4 whitespace-nowrap ">
+                                      {item[columnName]}
+                                    </td>
+                                  );
+                              }
+                            })}
                           </tr>
                         );
                       })}
