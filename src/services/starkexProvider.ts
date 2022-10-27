@@ -1,5 +1,5 @@
 // @ts-ignore
-import StarkExAPI from "@starkware-industries/starkex-js/dist/browser";
+import StarkExAPI, { TransferRequest } from "@starkware-industries/starkex-js";
 // @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
@@ -72,6 +72,29 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     }
   };
 
+  const getLastBatch = async (): Promise<any> => {
+    try {
+      console.log(starkExAPI);
+      const lastBatch = await starkExAPI.feederGateway.getLastBatchId();
+      console.log(lastBatch);
+      const lastBatchInfo = await starkExAPI.feederGateway.getBatchInfo(lastBatch);
+      return lastBatch;
+    } catch (error) {
+      uiConsole(error);
+      return error as string;
+    }
+  };
+
+  const getBatch = async (batch: number): Promise<any> => {
+    try {
+      const lastBatchInfo = await starkExAPI.feederGateway.getBatchInfo(batch);
+      return lastBatchInfo;
+    } catch (error) {
+      uiConsole(error);
+      return error as string;
+    }
+  };
+
   const onMintRequest = async (amount: string, tokenId: string, vaultId: string) => {
     try {
       const txId = await starkExAPI.gateway.getFirstUnusedTxId();
@@ -136,7 +159,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       };
       const response = await starkExAPI.gateway.deposit(request);
       uiConsole(response);
-      uiConsole(await starkExAPI.gateway.getTransaction(response.txId));
+      uiConsole(await starkExAPI.gateway.getTransaction(response.txId as unknown as number));
     } catch (error) {
       console.log(error);
       uiConsole(error);
@@ -248,7 +271,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
         memo: "my reference",
         partnerId: "xxyyzz",
       };
-      const response = await starkExAPI.gateway.transfer(request);
+      const response = await starkExAPI.gateway.transfer(request as unknown as TransferRequest);
       return response;
     } catch (error) {
       return error as string;
@@ -288,8 +311,16 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
             settlement_info: {
               party_a_sold: "75",
               party_b_sold: "25",
-              party_b_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
-              party_a_fee_info: { fee_taken: "15", destination_vault_id: 80, destination_stark_key: "0x60" },
+              party_b_fee_info: {
+                fee_taken: "15",
+                destination_vault_id: 80,
+                destination_stark_key: "0x60",
+              },
+              party_a_fee_info: {
+                fee_taken: "15",
+                destination_vault_id: 80,
+                destination_stark_key: "0x60",
+              },
             },
             party_a_order: {
               expiration_timestamp: party_a_order.expirationTimestamp,
@@ -328,6 +359,8 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     getETHAddress,
     getStarkAccount,
     getStarkKey,
+    getLastBatch,
+    getBatch,
     onViewBalanceRequest,
     onMintRequest,
     onDepositRequest,

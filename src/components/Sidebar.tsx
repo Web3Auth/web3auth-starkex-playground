@@ -24,13 +24,16 @@ const Sidebar = () => {
   function goToSettlement() {
     navigate("/settlement");
   }
+  function goToExplorer() {
+    navigate("/explorer");
+  }
   const location = useLocation();
   function linktoGo(label: string, path: any) {
     return (
       <div
         onClick={() => path()}
-        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer"
-      >
+        // eslint-disable-next-line prettier/prettier
+        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer">
         <span className="text-sm font-normal">{label}</span>
       </div>
     );
@@ -78,6 +81,7 @@ const Sidebar = () => {
           {location.pathname === "/minting" ? activePage("Minting") : linktoGo("Minting", goToMinting)}
           {location.pathname === "/transfer" ? activePage("Transfer") : linktoGo("Transfer", goToTransfer)}
           {location.pathname === "/settlement" ? activePage("Settlement") : linktoGo("Settlement", goToSettlement)}
+          {location.pathname === "/explorer" ? activePage("StarkEx Explorer") : linktoGo("StarkEx Explorer", goToExplorer)}
         </nav>
       </div>
       {userProfile()}

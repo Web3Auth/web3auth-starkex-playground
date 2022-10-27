@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Deposit from "./pages/Deposit";
+import Explorer from "./pages/Explorer";
 import HomePage from "./pages/HomePage";
 import Minting from "./pages/Minting";
 import Settlement from "./pages/Settlement";
@@ -23,6 +24,7 @@ function App() {
               <Route path="minting" element={<Minting />} />
               <Route path="transfer" element={<Transfer />} />
               <Route path="settlement" element={<Settlement />} />
+              <Route path="explorer" element={<Explorer />} />
             </Route>
           </Routes>
         </BrowserRouter>

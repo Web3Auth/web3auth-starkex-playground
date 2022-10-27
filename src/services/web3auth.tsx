@@ -16,6 +16,8 @@ export interface IWeb3AuthContext {
   getUserInfo: () => Promise<any>;
   getStarkAccount: () => Promise<any>;
   getStarkKey: (provider: any) => Promise<any>;
+  getLastBatch: () => Promise<void>;
+  getBatch: (batch: number) => Promise<void>;
   onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onL1DepositRequest: (amount: string, assetType: string, vaultId: string) => Promise<void>;
@@ -50,6 +52,8 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   getUserInfo: async () => {},
   getStarkAccount: async () => {},
   getStarkKey: async () => {},
+  getLastBatch: async () => {},
+  getBatch: async () => {},
   onMintRequest: async () => {},
   onDepositRequest: async () => {},
   onL1DepositRequest: async () => {},
@@ -259,10 +263,25 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const onViewDepositBalanceRequest = async (assetId: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onViewDepositBalanceRequest(assetId, vaultId);
+  };
+
+  const getLastBatch = async () => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.getLastBatch();
+  };
+
+  const getBatch = async (batch: number) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    await provider.getBatch(batch);
   };
 
   const onTransferRequest = async (
@@ -318,6 +337,8 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     getStarkAccount,
     getStarkKey,
     getETHAddress,
+    getLastBatch,
+    getBatch,
     onMintRequest,
     onDepositRequest,
     onL1DepositRequest,

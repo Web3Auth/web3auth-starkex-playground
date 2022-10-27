@@ -6,6 +6,8 @@ export interface IWalletProvider {
   getStarkAccount: () => Promise<any>;
   getStarkKey: () => Promise<any>;
   getETHAddress: () => Promise<any>;
+  getLastBatch: () => Promise<any>;
+  getBatch: (batch: number) => Promise<any>;
   onMintRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onDepositRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
   onWithdrawalRequest: (amount: string, tokenId: string, vaultId: string) => Promise<void>;
