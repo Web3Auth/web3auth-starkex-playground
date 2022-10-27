@@ -59,6 +59,9 @@ function Explorer() {
       batchInfo = new Array(lastStarkexBatch);
     }
     for (let index = lastBatch; index > lastBatch - 5; index--) {
+      if (index <= 0) {
+        break;
+      }
       if (!batchInfo[index - 1]) {
         batchInfo[index - 1] = await provider.getBatch(index);
         batchInfo[index - 1].no_of_txns = batchInfo[index - 1].txs_info.length;
