@@ -35,6 +35,7 @@ function Explorer() {
   const [amount, setAmount] = useState("6000000000");
   const [l1TransactionData, setL1TransactionData] = useState([]);
   const [l2TransactionData, setL2TransactionData] = useState([]);
+  const [batch_id, setBatchId] = useState(null);
   const [starkexBatches, setStarkexBatches] = useState([]);
   const [lastStarkexBatch, setLastStarkexBatch] = useState(1);
   const [activePage, setActivePage] = useState(1);
@@ -131,6 +132,7 @@ function Explorer() {
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
           <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-gray-200">
             <div className="overflow-x-auto">
+              <h1>Batch ID: {batch_id}</h1>
               <table className="w-full text-sm divide-y divide-gray-200 table-fixed">
                 <thead className="w-full">
                   <tr>
@@ -313,6 +315,7 @@ function Explorer() {
                                 className="p-4 font-medium whitespace-nowrap truncate"
                                 onClick={() => {
                                   setTab("starkex");
+                                  setBatchId(item["batch_id"]);
                                   setL2TransactionData(item.txs_info);
                                 }}
                               >
