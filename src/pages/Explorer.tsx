@@ -234,7 +234,7 @@ function Explorer() {
                   linkClass="page-link"
                   activePage={activePage}
                   activeClass="active-page"
-                  itemsCountPerPage={itemsCountPerPage}
+                  itemsCountPerPage={5}
                   totalItemsCount={lastStarkexBatch}
                   onChange={(e) => {
                     handlePageChange(e);
