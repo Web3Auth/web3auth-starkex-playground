@@ -316,7 +316,7 @@ function Explorer() {
                                 className="p-4 font-medium whitespace-nowrap truncate"
                                 onClick={() => {
                                   setTab("starkex");
-                                  setBatchId(item["batch_id"]);
+                                  setBatchId(item.batch_id);
                                   setIsVisible(true);
                                   setL2TransactionData(item.txs_info);
                                 }}
