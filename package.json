@@ -19,6 +19,7 @@
     "@web3auth/openlogin-adapter": "^2.0.2",
     "@web3auth/web3auth": "^2.0.2",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.0",
     "hamburger-react": "^2.5.0",
