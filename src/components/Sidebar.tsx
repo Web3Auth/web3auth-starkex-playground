@@ -32,8 +32,8 @@ const Sidebar = () => {
     return (
       <div
         onClick={() => path()}
-        // eslint-disable-next-line prettier/prettier
-        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer">
+        className="flex items-center px-4 py-2 mb-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-primary  cursor-pointer"
+      >
         <span className="text-sm font-normal">{label}</span>
       </div>
     );
@@ -50,7 +50,10 @@ const Sidebar = () => {
       try {
         return (
           <div className="sticky px-4 inset-x-0 bottom-0 border-t border-gray-100">
-            <div className="flex items-center justify-flex-start py-4 shrink-0 overflow-hidden">
+            <div
+              className="flex items-center justify-flex-start py-4 shrink-0 overflow-hidden hover:bg-gray-100 hover:text-primary  cursor-pointer"
+              onClick={() => navigate("/")}
+            >
               <img className="object-cover w-10 h-10 rounded-full" src={user.profileImage} referrerPolicy="no-referrer" />
 
               <div className="ml-1.5">
@@ -75,13 +78,14 @@ const Sidebar = () => {
       <div className="py-3">
         <strong className="px-4 block p-1 text-xs font-medium text-gray-400 uppercase">MENU</strong>
         <nav className="flex flex-col mt-6">
-          {location.pathname === "/" ? activePage("Default Parameters") : linktoGo("Default Parameters", goToHome)}
+          {location.pathname === "/explorer" ? activePage("StarkEx Explorer") : linktoGo("StarkEx Explorer", goToExplorer)}
+
           {location.pathname === "/withdrawal" ? activePage("Withdrawal") : linktoGo("Withdrawal", goToWithdrawal)}
           {location.pathname === "/deposit" ? activePage("Deposit") : linktoGo("Deposit", goToDeposit)}
           {location.pathname === "/minting" ? activePage("Minting") : linktoGo("Minting", goToMinting)}
           {location.pathname === "/transfer" ? activePage("Transfer") : linktoGo("Transfer", goToTransfer)}
           {location.pathname === "/settlement" ? activePage("Settlement") : linktoGo("Settlement", goToSettlement)}
-          {location.pathname === "/explorer" ? activePage("StarkEx Explorer") : linktoGo("StarkEx Explorer", goToExplorer)}
+          {location.pathname === "/" ? activePage("Default Parameters") : linktoGo("Default Parameters", goToHome)}
         </nav>
       </div>
       {userProfile()}

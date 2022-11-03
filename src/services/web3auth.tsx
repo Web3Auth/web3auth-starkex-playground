@@ -1,5 +1,5 @@
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import { Web3Auth } from "@web3auth/web3auth";
+import { Web3Auth } from "@web3auth/modal";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
 import { getWalletProvider, IWalletProvider } from "./walletProvider";
