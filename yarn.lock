@@ -5920,7 +5920,7 @@
     "resolve" "^1.10.1"
     "semver" "^7.3.7"
 
-"eslint-plugin-prettier@^4.x":
+"eslint-plugin-prettier@^4.2.1", "eslint-plugin-prettier@^4.x":
   "integrity" "sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ=="
   "resolved" "https://registry.npmjs.org/eslint-plugin-prettier/-/eslint-plugin-prettier-4.2.1.tgz"
   "version" "4.2.1"
