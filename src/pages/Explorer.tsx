@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable prettier/prettier */
 /* eslint-disable require-atomic-updates */
 // @ts-ignore
