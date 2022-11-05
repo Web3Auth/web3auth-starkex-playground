@@ -1,7 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable prettier/prettier */
-/* eslint-disable require-atomic-updates */
-// @ts-ignore
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
