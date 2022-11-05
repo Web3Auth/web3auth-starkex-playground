@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Signature } from "ethers";
 import { useState } from "react";
 

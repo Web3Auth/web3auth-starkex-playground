@@ -90,22 +90,20 @@ function Transfer() {
               <button
                 className="w-full mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
                 style={{ backgroundColor: "#0364ff" }}
-                onClick={
-                  () =>
-                    onTransferRequest(
-                      amount,
-                      nonce,
-                      senderPublicKey,
-                      senderVaultId,
-                      token,
-                      receiverPublicKey,
-                      receiverPublicKey,
-                      expirationTimestamp,
-                      signatureR,
-                      signatureS
-                    )
-                  // eslint-disable-next-line prettier/prettier
-          }>
+                onClick={() =>
+                  onTransferRequest(
+                    amount,
+                    nonce,
+                    senderPublicKey,
+                    senderVaultId,
+                    token,
+                    receiverPublicKey,
+                    receiverPublicKey,
+                    expirationTimestamp,
+                    signatureR,
+                    signatureS
+                  )
+                }>
                 Send with StarkEx Gateway
               </button>
             </Form>
