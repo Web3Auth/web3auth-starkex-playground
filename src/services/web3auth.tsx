@@ -124,7 +124,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     async function init() {
       try {
         setIsLoading(true);
-        const clientId = "BOBJnF2hVRa4lNWVDSZuFBs3mKeA8_P2gRHvIqsgyGAjg8tnVgTmJOVFF_AtvZNYNVD0OydlF01286JouQs8DIA";
+        const clientId = "BHr_dKcxC0ecKn_2dZQmQeNdjPgWykMkcodEHkVvPMo71qzOV6SgtoN8KCvFdLN7bf34JOm89vWQMLFmSfIo84A";
         const web3AuthInstance = new Web3Auth({
           chainConfig: {
             displayName: "StarkEx",
