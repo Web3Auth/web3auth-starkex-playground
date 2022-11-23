@@ -18,8 +18,7 @@ function Withdrawal() {
     type: "ETH",
     data: { quantum: "1" },
   });
-  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest } =
-    useWeb3Auth();
+  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest } = useWeb3Auth();
 
   const [vaultId, setVaultId] = useState("1654615998");
   const [tokenId, setTokenId] = useState(asset_id);
@@ -93,9 +92,7 @@ function Withdrawal() {
         <Sidebar />
         {provider ? (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
-            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">
-              Withdrawal
-            </h1>
+            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">Withdrawal</h1>
             <Tabs tabData={TabData} />
             {tab === "starkex" ? (
               <Form formDetails={formDetailsStarkEx}>
@@ -112,9 +109,7 @@ function Withdrawal() {
                 <button
                   className="w-full mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
                   style={{ backgroundColor: "#0364ff" }}
-                  onClick={() =>
-                    onL1WithdrawalRequest(amount, vaultId, assetType)
-                  }
+                  onClick={() => onL1WithdrawalRequest(amount, vaultId, assetType)}
                 >
                   Withdraw ETH
                 </button>
@@ -124,12 +119,8 @@ function Withdrawal() {
           </div>
         ) : (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll p-4">
-            <h1 className="text-2xl font-bold text-center sm:text-3xl">
-              Welcome to Web3Auth StarkEx Playground
-            </h1>
-            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
-              Please connect to Web3Auth to get started.
-            </p>
+            <h1 className="text-2xl font-bold text-center sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
+            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
           </div>
         )}
       </div>
