@@ -105,10 +105,18 @@ function Settlement() {
   const [amountBuy1, setAmountBuy1] = useState(sampleOrderL1.amountSell);
   const [tokenSell1, setTokenSell1] = useState(sampleOrderL1.tokenSell);
   const [tokenBuy1, setTokenBuy1] = useState(sampleOrderL1.tokenBuy);
-  const [feeInfoTokenId1, setFeeInfoTokenId1] = useState(sampleOrderL1.feeInfo.tokenId);
-  const [feeInfoSourceVaultId1, setfeeInfoSourceVaultId1] = useState(sampleOrderL1.feeInfo.sourceVaultId);
-  const [feeInfoFeeLimit1, setFeeInfoFeeLimit1] = useState(sampleOrderL1.feeInfo.feeLimit);
-  const [expirationTime1, setExpirationTime1] = useState(sampleOrderL1.expirationTimestamp);
+  const [feeInfoTokenId1, setFeeInfoTokenId1] = useState(
+    sampleOrderL1.feeInfo.tokenId
+  );
+  const [feeInfoSourceVaultId1, setfeeInfoSourceVaultId1] = useState(
+    sampleOrderL1.feeInfo.sourceVaultId
+  );
+  const [feeInfoFeeLimit1, setFeeInfoFeeLimit1] = useState(
+    sampleOrderL1.feeInfo.feeLimit
+  );
+  const [expirationTime1, setExpirationTime1] = useState(
+    sampleOrderL1.expirationTimestamp
+  );
   const [vaultIdSell1, setVaultIdSell1] = useState(sampleOrderL1.vaultIdSell);
   const [vaultIdBuy1, setVaultIdBuy1] = useState(sampleOrderL1.vaultIdBuy);
 
@@ -118,10 +126,18 @@ function Settlement() {
   const [amountBuy2, setAmountBuy2] = useState(sampleOrderL2.amountSell);
   const [tokenSell2, setTokenSell2] = useState(sampleOrderL2.tokenSell);
   const [tokenBuy2, setTokenBuy2] = useState(sampleOrderL2.tokenBuy);
-  const [feeInfoTokenId2, setFeeInfoTokenId2] = useState(sampleOrderL2.feeInfo.tokenId);
-  const [feeInfoSourceVaultId2, setfeeInfoSourceVaultId2] = useState(sampleOrderL2.feeInfo.sourceVaultId);
-  const [feeInfoFeeLimit2, setFeeInfoFeeLimit2] = useState(sampleOrderL2.feeInfo.feeLimit);
-  const [expirationTime2, setExpirationTime2] = useState(sampleOrderL2.expirationTimestamp);
+  const [feeInfoTokenId2, setFeeInfoTokenId2] = useState(
+    sampleOrderL2.feeInfo.tokenId
+  );
+  const [feeInfoSourceVaultId2, setfeeInfoSourceVaultId2] = useState(
+    sampleOrderL2.feeInfo.sourceVaultId
+  );
+  const [feeInfoFeeLimit2, setFeeInfoFeeLimit2] = useState(
+    sampleOrderL2.feeInfo.feeLimit
+  );
+  const [expirationTime2, setExpirationTime2] = useState(
+    sampleOrderL2.expirationTimestamp
+  );
   const [vaultIdSell2, setVaultIdSell2] = useState(sampleOrderL2.vaultIdSell);
   const [vaultIdBuy2, setVaultIdBuy2] = useState(sampleOrderL2.vaultIdBuy);
   const [signatureR2, setSignatureR2] = useState(sampleOrderL2.signature.r);
@@ -282,28 +298,43 @@ function Settlement() {
         <Sidebar />
         {provider ? (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
-            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">Settlement</h1>
+            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">
+              Settlement
+            </h1>
             <div className="md:w-11/12 w-full md:flex justify-center align-center">
               <div className="w-full flex justify-center align-center">
-                <MultiForm heading="OrderL1Request" headingCenter formDetails={formDetails1}></MultiForm>
+                <MultiForm
+                  heading="OrderL1Request"
+                  headingCenter
+                  formDetails={formDetails1}
+                ></MultiForm>
               </div>
               <div className="w-full flex justify-center align-center">
-                <MultiForm heading="OrderL2Request" headingCenter formDetails={formDetails2}></MultiForm>
+                <MultiForm
+                  heading="OrderL2Request"
+                  headingCenter
+                  formDetails={formDetails2}
+                ></MultiForm>
               </div>
             </div>
 
             <button
               className="w-10/12 mt-10 mb-0 text-center justify-center items-center flex rounded-full px-6 py-3 text-white"
               style={{ backgroundColor: "#0364ff" }}
-              onClick={() => onSettlementRequest({}, OrderL12, OrderL11)}>
+              onClick={() => onSettlementRequest({}, OrderL12, OrderL11)}
+            >
               Send with StarkEx Gateway
             </button>
             <Console />
           </div>
         ) : (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll p-4">
-            <h1 className="text-2xl font-bold text-center sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
-            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
+            <h1 className="text-2xl font-bold text-center sm:text-3xl">
+              Welcome to Web3Auth StarkEx Playground
+            </h1>
+            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
+              Please connect to Web3Auth to get started.
+            </p>
           </div>
         )}
       </div>

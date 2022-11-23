@@ -3,7 +3,12 @@ import { Dispatch, SetStateAction } from "react";
 interface FormProps {
   heading?: string;
   headingCenter?: boolean;
-  formDetails: { label: string; input: string; readOnly?: boolean; onChange?: any }[];
+  formDetails: {
+    label: string;
+    input: string;
+    readOnly?: boolean;
+    onChange?: any;
+  }[];
   children?: JSX.Element | JSX.Element[];
 }
 

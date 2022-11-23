@@ -18,7 +18,10 @@
     "@typescript-eslint/no-use-before-define": "off",
     "react/jsx-props-no-spreading": 0,
     "camelcase": "off",
-    "import/no-unresolved": [2, { "ignore": ["^@theme", "^@docusaurus", "^@site"] }]
+    "import/no-unresolved": [
+      2,
+      { "ignore": ["^@theme", "^@docusaurus", "^@site"] }
+    ]
   },
   "settings": {
     "mdx/code-blocks": false
@@ -37,7 +40,10 @@
         "extraFileExtensions": [".mdx"]
       },
       "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx", ".mdx"] }],
+        "react/jsx-filename-extension": [
+          1,
+          { "extensions": [".js", ".jsx", ".ts", ".tsx", ".mdx"] }
+        ],
         "@typescript-eslint/return-await": 0,
         "@typescript-eslint/no-throw-literal": 0,
         "@typescript-eslint/no-implied-eval": 0,

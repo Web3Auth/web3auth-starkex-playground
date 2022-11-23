@@ -1,5 +1,6 @@
+import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
-import { Web3Auth } from "@web3auth/web3auth";
+import { Web3Auth } from "@web3auth/modal";
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
 import { getWalletProvider, IWalletProvider } from "./walletProvider";
@@ -11,6 +12,7 @@ export interface IWeb3AuthContext {
   user: any;
   starkKey: any;
   address: any;
+  balance: any;
   login: () => Promise<void>;
   logout: () => Promise<void>;
   getUserInfo: () => Promise<any>;
@@ -47,6 +49,7 @@ export const Web3AuthContext = createContext<IWeb3AuthContext>({
   user: null,
   starkKey: null,
   address: null,
+  balance: null,
   login: async () => {},
   logout: async () => {},
   getUserInfo: async () => {},
@@ -78,6 +81,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const [provider, setProvider] = useState<IWalletProvider | null>(null);
   const [starkKey, setStarkKey] = useState<IWalletProvider | null>(null);
   const [address, setAddress] = useState<IWalletProvider | null>(null);
+  const [balance, setBalance] = useState<IWalletProvider | null>(null);
   const [user, setUser] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -93,6 +97,7 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     setProvider(walletProvider);
     setStarkKey(await walletProvider?.getStarkKey());
     setAddress(await walletProvider.getETHAddress());
+    setBalance(await walletProvider.getETHBalance());
   }, []);
 
   useEffect(() => {
@@ -173,7 +178,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const getUserInfo = async () => {
     if (!web3Auth) {
       uiConsole("web3auth not initialized yet");
-      uiConsole("web3auth not initialized yet");
       return;
     }
     const user = await web3Auth.getUserInfo();
@@ -183,7 +187,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const getStarkAccount = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.getStarkAccount();
@@ -192,10 +195,17 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const getETHAddress = async () => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.getETHAddress();
+  };
+
+  const getETHBalance = async () => {
+    if (!web3Auth) {
+      uiConsole("web3auth not initialized yet");
+      return;
+    }
+    await provider.getETHBalance();
   };
 
   const getStarkKey = async () => {
@@ -209,7 +219,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const onMintRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onMintRequest(amount, tokenId, vaultId);
@@ -217,7 +226,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
 
   const onDepositRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
-      uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
@@ -227,7 +235,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const onL1DepositRequest = async (amount: string, assetType: string, vaultId: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onL1DepositRequest(amount, assetType, vaultId);
@@ -235,7 +242,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
 
   const onWithdrawalRequest = async (amount: string, tokenId: string, vaultId: string) => {
     if (!provider) {
-      uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
@@ -245,7 +251,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const onL1WithdrawalRequest = async (amount: string, vaultId: string, assetType: string) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onL1WithdrawalRequest(amount, vaultId, assetType);
@@ -253,7 +258,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
 
   const onViewBalanceRequest = async (assetType: string, vaultId: string) => {
     if (!provider) {
-      uiConsole("provider not initialized yet");
       uiConsole("provider not initialized yet");
       return;
     }
@@ -298,7 +302,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   ) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onTransferRequest(
@@ -318,7 +321,6 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
   const onSettlementRequest = async (settlementInfo: any, party_a_order: any, party_b_order: any) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
-      uiConsole("provider not initialized yet");
       return;
     }
     await provider.onSettlementRequest(settlementInfo, party_a_order, party_b_order);
@@ -331,12 +333,14 @@ export const Web3AuthProvider = ({ children }: IWeb3AuthProps) => {
     isLoading,
     starkKey,
     address,
+    balance,
     login,
     logout,
     getUserInfo,
     getStarkAccount,
     getStarkKey,
     getETHAddress,
+    getETHBalance,
     getLastBatch,
     getBatch,
     onMintRequest,

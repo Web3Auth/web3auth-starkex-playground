@@ -21,7 +21,13 @@ function Explorer() {
     type: "ETH",
     data: { quantum: "1" },
   });
-  const { provider, starkKey, onWithdrawalRequest, onL1WithdrawalRequest, getLastBatch } = useWeb3Auth();
+  const {
+    provider,
+    starkKey,
+    onWithdrawalRequest,
+    onL1WithdrawalRequest,
+    getLastBatch,
+  } = useWeb3Auth();
 
   const [vaultId, setVaultId] = useState("1654615998");
   const [tokenId, setTokenId] = useState(asset_id);
@@ -76,11 +82,15 @@ function Explorer() {
       method: "GET",
       headers: {
         accept: "application/json",
-        "X-API-Key": "NGeSzLk0z99E2e4R1BK1AICtvAtCeprCQtc8DjOlAzK75x7qWSKUxhlfYijthyIy",
+        "X-API-Key":
+          "NGeSzLk0z99E2e4R1BK1AICtvAtCeprCQtc8DjOlAzK75x7qWSKUxhlfYijthyIy",
       },
     };
 
-    fetch("https://deep-index.moralis.io/api/v2/0x5731aEa1809BE0454907423083fb879079FB69dF?chain=goerli", options)
+    fetch(
+      "https://deep-index.moralis.io/api/v2/0x5731aEa1809BE0454907423083fb879079FB69dF?chain=goerli",
+      options
+    )
       .then((response) => response.json())
       .then((response) => {
         setL1TransactionData(response.result);
@@ -126,13 +136,21 @@ function Explorer() {
                   <tr>
                     {columns.length > 0 &&
                       columns.map((item) => {
-                        return <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">{item}</th>;
+                        return (
+                          <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">
+                            {item}
+                          </th>
+                        );
                       })}
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-gray-100">
-                  <JsonFormatter json={JSON.stringify(l2TransactionData)} tabWith={4} jsonStyle={jsonStyle} />
+                  <JsonFormatter
+                    json={JSON.stringify(l2TransactionData)}
+                    tabWith={4}
+                    jsonStyle={jsonStyle}
+                  />
                 </tbody>
               </table>
             </div>
@@ -140,7 +158,13 @@ function Explorer() {
         </div>
       );
     } else if (tab === "l1") {
-      const columns = ["hash", "block_number", "from_address", "to_address", "gas"];
+      const columns = [
+        "hash",
+        "block_number",
+        "from_address",
+        "to_address",
+        "gas",
+      ];
       return (
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
           <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
@@ -150,7 +174,11 @@ function Explorer() {
                   <tr>
                     {columns.length > 0 &&
                       columns.map((item) => {
-                        return <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">{item}</th>;
+                        return (
+                          <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">
+                            {item}
+                          </th>
+                        );
                       })}
                   </tr>
                 </thead>
@@ -158,12 +186,17 @@ function Explorer() {
                 <tbody className="divide-y divide-gray-100">
                   {l1TransactionData.length > 0 &&
                     l1TransactionData
-                      .slice((activePage - 1) * itemsCountPerPage, (activePage - 1) * itemsCountPerPage + itemsCountPerPage)
+                      .slice(
+                        (activePage - 1) * itemsCountPerPage,
+                        (activePage - 1) * itemsCountPerPage + itemsCountPerPage
+                      )
                       .map((item) => {
                         return (
                           <tr>
                             {columns.map((columnName) => (
-                              <td className="p-4 font-medium whitespace-nowrap truncate">{item[`${columnName}`]}</td>
+                              <td className="p-4 font-medium whitespace-nowrap truncate">
+                                {item[`${columnName}`]}
+                              </td>
                             ))}
                           </tr>
                         );
@@ -189,7 +222,13 @@ function Explorer() {
         </div>
       );
     } else if (tab === "batches") {
-      const columns = ["batch_id", "prev_batch_id", "sequence_number", "no_of_txns", "time_created"];
+      const columns = [
+        "batch_id",
+        "prev_batch_id",
+        "sequence_number",
+        "no_of_txns",
+        "time_created",
+      ];
       return (
         <div className="w-11/12 px-4 sm:px-6 lg:px-8 flex-col">
           <div className="justify-center p-8 mt-6 mb-0 space-y-4 rounded-lg bg-white">
@@ -199,7 +238,11 @@ function Explorer() {
                   <tr>
                     {columns.length > 0 &&
                       columns.map((item) => {
-                        return <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">{item}</th>;
+                        return (
+                          <th className="p-4 font-bold text-left text-gray-900 whitespace-nowrap w-1/3">
+                            {item}
+                          </th>
+                        );
                       })}
                   </tr>
                 </thead>
@@ -218,7 +261,8 @@ function Explorer() {
                                 onClick={() => {
                                   setTab("starkex");
                                   setL2TransactionData(item.txs_info);
-                                }}>
+                                }}
+                              >
                                 {item[`${columnName}`]}
                               </td>
                             ))}
@@ -255,14 +299,20 @@ function Explorer() {
         <Sidebar />
         {provider ? (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-flex-start overflow-scroll">
-            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">StarkEx Explorer</h1>
+            <h1 className="w-11/12 px-4 pt-16 pb-8 sm:px-6 lg:px-8 text-2xl font-bold text-center sm:text-3xl">
+              StarkEx Explorer
+            </h1>
             <Tabs tabData={TabData} />
             {renderTabs()}
           </div>
         ) : (
           <div className=" w-full h-full flex flex-1 flex-col bg-gray-50 items-center justify-center overflow-scroll p-4">
-            <h1 className="text-2xl font-bold text-center sm:text-3xl">Welcome to Web3Auth StarkEx Playground</h1>
-            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">Please connect to Web3Auth to get started.</p>
+            <h1 className="text-2xl font-bold text-center sm:text-3xl">
+              Welcome to Web3Auth StarkEx Playground
+            </h1>
+            <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
+              Please connect to Web3Auth to get started.
+            </p>
           </div>
         )}
       </div>

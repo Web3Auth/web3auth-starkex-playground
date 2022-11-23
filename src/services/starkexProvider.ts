@@ -4,7 +4,7 @@ import StarkExAPI, { TransferRequest } from "@starkware-industries/starkex-js";
 import starkwareCrypto from "@starkware-industries/starkware-crypto-utils";
 import type { SafeEventEmitterProvider } from "@web3auth/base";
 import { privateToAddress } from "ethereumjs-util";
-import { Contract, providers, Wallet } from "ethers";
+import { Contract, providers, utils, Wallet } from "ethers";
 
 import ABI from "../config/ABI.json";
 import { IWalletProvider } from "./walletProvider";
@@ -19,6 +19,19 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
       const privateKey = await provider?.request({ method: "private_key" });
       const address = privateToAddress(Buffer.from(privateKey as string, "hex")).toString("hex");
       return address;
+    } catch (error) {
+      uiConsole(error);
+      return error;
+    }
+  };
+
+  const getETHBalance = async (): Promise<any> => {
+    try {
+      const privateKey = await provider?.request({ method: "private_key" });
+      const alchemyProvider = new providers.AlchemyProvider("goerli", "4ZLZLLlFuTk2Md56571LEpcn6WML4L7X");
+      const wallet = new Wallet(privateKey as any, alchemyProvider);
+      const balance = await wallet.getBalance();
+      return utils.formatEther(balance);
     } catch (error) {
       uiConsole(error);
       return error;
@@ -120,7 +133,8 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
     const signer = new Wallet(privateKey as string, alchemyProvider);
     const StarkExchange = new Contract("0x471bDA7f420de34282AB8AF1F5F3DAf2a4C09746", ABI, signer);
     const starkKey = await getStarkKey();
-    uiConsole(await StarkExchange.getDepositBalance(BigInt(`0x${starkKey}` as string).toString(10), assetType, vaultId));
+    const L1Balance = await StarkExchange.getDepositBalance(BigInt(`0x${starkKey}` as string).toString(10), assetType, vaultId);
+    uiConsole(L1Balance);
   };
 
   const onL1DepositRequest = async (amount: string, assetType: string, vaultId: string) => {
@@ -357,6 +371,7 @@ const starkexProvider = (provider: SafeEventEmitterProvider | null, uiConsole: (
   };
   return {
     getETHAddress,
+    getETHBalance,
     getStarkAccount,
     getStarkKey,
     getLastBatch,

@@ -10,8 +10,14 @@ import Tabs from "../components/Tabs";
 import { useWeb3Auth } from "../services/web3auth";
 
 function Deposit() {
-  const asset_type = starkwareCrypto.asset.getAssetType({ type: "ETH", data: { quantum: "1" } });
-  const asset_id = starkwareCrypto.asset.getAssetId({ type: "ETH", data: { quantum: "1" } });
+  const asset_type = starkwareCrypto.asset.getAssetType({
+    type: "ETH",
+    data: { quantum: "1" },
+  });
+  const asset_id = starkwareCrypto.asset.getAssetId({
+    type: "ETH",
+    data: { quantum: "1" },
+  });
   const [vaultId, setVaultId] = useState("1654615998");
   const [tokenId, setTokenId] = useState(asset_id);
   const [assetType, setAssetType] = useState(asset_type);
